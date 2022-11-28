@@ -1,20 +1,20 @@
-import { dbConnect } from './dbconnect';
 import mongoose from 'mongoose';
+import { dbConnect } from './dbconnect';
 
-describe('Given the db connect file', () => {
-    describe('when we connect to the db ', () => {
-        test.skip('then the connection should be the type of mongoose', async () => {
-            const result = await dbConnect();
-            expect(typeof result).toBe(typeof mongoose);
-            mongoose.disconnect();
-        });
-        describe('when we connection of NODE_ENV is not "test" ', () => {
-            test('then it should connect to resources', () => {
-                process.env.NODE_ENV = 'other';
-                const result = dbConnect();
-                expect(result).toBeInstanceOf(Promise);
-                mongoose.disconnect();
-            });
-        });
+describe('Given dbconnect service', () => {
+    test('should connect with the database', async () => {
+        const spyConnect = jest.spyOn(mongoose, 'connect');
+        await dbConnect();
+        expect(spyConnect).toHaveBeenCalled();
+    });
+    test('should connect with the database with other dbName', async () => {
+        process.env.NODE_ENV = '';
+        const spyConnect = jest.spyOn(mongoose, 'connect');
+        const result = await dbConnect();
+        expect(spyConnect).toHaveBeenCalled();
+        expect(result.connection.db.databaseName).toBe('resources');
+    });
+    afterEach(() => {
+        mongoose.disconnect();
     });
 });
