@@ -2,7 +2,7 @@
     "name": "Yanira-Zapata_Back-Final-Project-202210-MAD",
     "version": "1.0.0",
     "description": "Proyecto EducApp",
-    "master": "index.js",
+    "main": "index.js",
     "type": "module",
     "scripts": {
         "start": "cross-env node dist/index.js",
