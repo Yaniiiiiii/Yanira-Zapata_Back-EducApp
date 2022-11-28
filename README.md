@@ -6,22 +6,21 @@ El proyecto es una "single page application" de tipo "mobile only" en la que los
 iniciado sesión(log in) previamente. Además, los usuarios que así lo deseen, podrán poner a la venta sus propios recursos educativos y comprar
 los de otros usuarios(extra).
 
-## Funciones básicas y endpoints
+## Funciones básicas y endpoints.
 
 La aplicación web incluye las 4 funcionalidades básicas del acrónimo CRUD cuyas siglas en inglés se refieren a: "Create, Read, Update and Delete".
 
 1.  Endopoint: /resources, incluye:
 
--   GetAll: muestra la lista completa de recursos educativos (/resources/getAll).
--   Get: muestra la página de detalles de cada recurso educativo (/resources/get).
--   Post: Permite que los usuarios logeados suban contenido educativo (/resources/post).
--   Patch: Permite que los usuarios logeados y que hayan subido el recurso educativo puedan modificar sus recursos (/resources/patch).
--   PatchFavorites: Permite que los usuarios logeados y que hayan subido el recurso educativo puedan añadir y eliminar sus recursos a la lista de favoritos(/resources/patchFavorites).
--   Delete: Permite que los usuarios logeados eliminen recursos de su lista de favoritos o de la plataforma (/resources/delete).
--   Find:
-
-    -FindByGrade: encontrar recursos en función del curso escolar (/resources/findByGrade).
-    -FindBySubject: encontrar recursos en función de la asignatura (/resources/findBySubject).
+-   Get: muestra la lista completa de recursos educativos (/resources/).
+-   Get: muestra la página de detalles de cada recurso educativo (/resources/:id).
+-   Get:
+    -   FindByGrade: encontrar recursos en función del curso escolar (/resources/:grade).
+    -   FindBySubject: encontrar recursos en función de la asignatura (/resources/:subject).
+-   Post: Permite que los usuarios logeados suban contenido educativo (/resources/).
+-   Patch: Permite que los usuarios logeados y que hayan subido el recurso educativo puedan modificar sus recursos (/resources/update/:id).
+-   Patch: Permite que los usuarios logeados y que hayan subido el recurso educativo puedan añadir y eliminar sus recursos a la lista de favoritos(/resources/updateFavorites/:id).
+-   Delete: Permite que los usuarios logeados eliminen recursos de su lista de favoritos o de la plataforma (/resources/:id).
 
 2. Endopoint: /users, incluye:
 
@@ -37,9 +36,9 @@ password: string,
 role: string,
 school: string,
 grade: string,
-resources: Array de ObjectId,
-favorites: Array de ObjectId,
-carts: Array de ObjectId,
+resources: Array de Ids,
+favorites: Array de Ids,
+carts: Array de Ids,
 id: string,
 
 Resource:
@@ -50,7 +49,7 @@ description: string,
 pages: string,
 price: number,
 format: string,
-owner: ObjectId,
+owner: Id,
 id: string,
 
 ## Prototipo creado con Figma
