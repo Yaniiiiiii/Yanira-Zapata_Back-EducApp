@@ -11,3 +11,7 @@ const corsOptions = {
 app.use(morgan('dev'));
 app.use(cors(corsOptions));
 app.use(express.json());
+
+app.get('/', (_req, res) => {
+    res.send('API Express / Songs').end();
+});
