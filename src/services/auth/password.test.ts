@@ -8,13 +8,13 @@ describe('Given the password class', () => {
         const result = await password.passwordEncrypt('');
         expect(result).toBe('');
     });
-    test('then the method passwordValidate should return a promise', async () => {
+    test('then the method passwordValidate should return true', async () => {
         bc.compare = jest.fn().mockResolvedValue(true);
         bc.hash = jest.fn().mockResolvedValue('');
         const result = await password.passwordValidate('', '');
         expect(result).toBe(true);
     });
-    test('then the method passwordValidate should return a promise', async () => {
+    test('then the method passwordValidate should return a false if the values dont match', async () => {
         bc.compare = jest.fn().mockResolvedValue(false);
         bc.hash = jest.fn().mockResolvedValue('2');
         const result = await password.passwordValidate('', '2');
