@@ -3,7 +3,7 @@ import createDebug from 'debug';
 import { app } from './app.js';
 
 import { dbConnect } from './services/dbconnect.js';
-const debug = createDebug('W8');
+const debug = createDebug('EducApp');
 
 const port = process.env.PORT || 3300;
 
