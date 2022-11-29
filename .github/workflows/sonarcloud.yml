@@ -54,6 +54,7 @@ jobs:
           MYUSER: ${{ secrets.MYUSER }}
           PASS: ${{ secrets.PASS }}
           CLUSTER: ${{ secrets.CLUSTER }} #Change for a valid npm script
+          SECRET: ${{ secrets.SECRET }}
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
