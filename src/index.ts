@@ -6,6 +6,7 @@ import { dbConnect } from './services/dbconnect.js';
 const debug = createDebug('W8');
 
 const port = process.env.PORT || 3300;
+
 const server = http.createServer(app);
 server.on('listening', () => {
     const addr = server.address();
@@ -19,12 +20,12 @@ server.on('listening', () => {
                 ? `http://localhost:${addr?.port}`
                 : `port ${addr?.port}`;
     }
-    debug(`Listening on ${bind}`);
+    console.log(`Listening on ${bind}`);
 });
 
 dbConnect()
     .then((mongoose) => {
-        debug('DB:', mongoose.connection.db.databaseName);
+        console.log('DB:', mongoose.connection.db.databaseName);
         server.listen(port);
     })
     .catch((error) => server.emit(error));
