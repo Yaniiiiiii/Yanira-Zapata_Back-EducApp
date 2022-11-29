@@ -1,5 +1,5 @@
-import { ResourceI } from '../entities/resources';
-import { UserI } from '../entities/users';
+import { ResourceI } from '../entities/resources.js';
+import { UserI } from '../entities/users.js';
 
 export type id = string | number;
 
@@ -14,6 +14,6 @@ export interface ResourcesRepo {
 
 export interface UserRepo {
     post: (data: Partial<UserI>) => Promise<UserI>;
-    patch: (id: id) => Promise<id>;
+    patch: (id: id, data: Partial<UserI>) => Promise<UserI>;
     //delete: (id: id) => Promise<id>;
 }

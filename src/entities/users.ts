@@ -67,4 +67,4 @@ userSchema.set('toJSON', {
         delete returnedObject._id;
     },
 });
-export const UsersModel = model<UserI>('user', userSchema, 'users');
+export const UserModel = model<UserI>('user', userSchema, 'users');

@@ -3,8 +3,8 @@ import {
     ProtoResourceI,
     ResourceI,
     ResourceModel,
-} from '../entities/resources';
-import { id, ResourcesRepo } from './repo.interface';
+} from '../entities/resources.js';
+import { id, ResourcesRepo } from './repo.interface.js';
 
 export class ResourcesRepository implements ResourcesRepo {
     static instance: ResourcesRepository;
