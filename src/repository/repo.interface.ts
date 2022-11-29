@@ -13,7 +13,9 @@ export interface ResourcesRepo {
 }
 
 export interface UserRepo {
+    get: (id: id) => Promise<UserI>;
     post: (data: Partial<UserI>) => Promise<UserI>;
     patch: (id: id, data: Partial<UserI>) => Promise<UserI>;
+    find: (data: any) => Promise<UserI>;
     //delete: (id: id) => Promise<id>;
 }
