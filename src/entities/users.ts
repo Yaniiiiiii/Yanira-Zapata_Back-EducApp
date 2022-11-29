@@ -13,11 +13,6 @@ export type ProtoUserI = {
     carts?: Array<Types.ObjectId>;
 };
 
-export type cart = {
-    id: Types.ObjectId;
-    owner: Types.ObjectId;
-    resources: [{ productId: Types.ObjectId }];
-};
 export type UserI = {
     name: string;
     email: string;
@@ -27,8 +22,14 @@ export type UserI = {
     grade: string;
     resources: Array<Types.ObjectId>;
     favorites: Array<Types.ObjectId>;
-    carts: Array<Types.ObjectId>;
-    id: string;
+    carts?: Array<Types.ObjectId>;
+    id: Types.ObjectId;
+};
+
+export type cart = {
+    id: Types.ObjectId;
+    owner: Types.ObjectId;
+    resources: [{ productId: Types.ObjectId }];
 };
 
 export const userSchema = new Schema<UserI>({
@@ -47,7 +48,6 @@ export const userSchema = new Schema<UserI>({
         required: true,
         unique: true,
     },
-
     role: String,
     school: String,
     grade: String,

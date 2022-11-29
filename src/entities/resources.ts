@@ -20,6 +20,7 @@ export type ResourceI = {
     price?: number;
     format: string;
     owner: Types.ObjectId;
+    id: Types.ObjectId;
 };
 
 export type SubjectI = {
