@@ -6,7 +6,7 @@
     "type": "module",
     "scripts": {
         "start": "cross-env node dist/index.js",
-        "start:dev": "cross-env PORT=7700 node dist/index.js",
+        "start:dev": "cross-env PORT=3300 node dist/index.js",
         "build": "tsc",
         "build:dev": "tsc --watch",
         "test": "cross-env NODE_ENV=test jest --watchAll --coverage",

@@ -19,13 +19,14 @@ La aplicación web incluye las 4 funcionalidades básicas del acrónimo CRUD cuy
     -   FindBySubject: encontrar recursos en función de la asignatura (/resources/:subject).
 -   Post: Permite que los usuarios logeados suban contenido educativo (/resources/).
 -   Patch: Permite que los usuarios logeados y que hayan subido el recurso educativo puedan modificar sus recursos (/resources/update/:id).
--   Patch: Permite que los usuarios logeados y que hayan subido el recurso educativo puedan añadir y eliminar sus recursos a la lista de favoritos(/resources/updateFavorites/:id).
--   Delete: Permite que los usuarios logeados eliminen recursos de su lista de favoritos o de la plataforma (/resources/:id).
+
+-   Delete: Permite que los usuarios logeados eliminen recursos de la plataforma (/resources/:id).
 
 2. Endopoint: /users, incluye:
 
 -   Post: cuando los usuarios se registren (/users/register).
 -   Post: cuando los usuarios inicien sesión (/users/login).
+-   Patch: Permite que los usuarios logeados y que hayan subido el recurso educativo puedan añadir y eliminar sus recursos a la lista de favoritos(/resources/updateFavorites/:id).
 
 ## Modelo de datos
 

@@ -5,7 +5,7 @@ import { app } from './app.js';
 import { dbConnect } from './services/dbconnect.js';
 const debug = createDebug('W8');
 
-const port = process.env.PORT || 7700;
+const port = process.env.PORT || 3300;
 const server = http.createServer(app);
 server.on('listening', () => {
     const addr = server.address();
