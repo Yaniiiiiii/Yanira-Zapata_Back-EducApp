@@ -32,11 +32,13 @@ export class ResourcesRepository implements ResourcesRepo {
         return result as ResourceI;
     }
 
-    async find(search: { [key: string]: string }): Promise<Array<ResourceI>> {
-        const result = await this.#Model.findOne(search).populate('owner', {
-            resources: 0,
-        });
-        return result as unknown as ResourceI[];
+    async query(key: string, value: string): Promise<Array<ResourceI>> {
+        const result = await this.#Model
+            .find({ [key]: value })
+            .populate('owner', {
+                resources: 0,
+            });
+        return result as unknown as Array<ResourceI>;
     }
 
     async post(data: Partial<ProtoResourceI>): Promise<ResourceI> {
@@ -57,7 +59,6 @@ export class ResourcesRepository implements ResourcesRepo {
             .populate('owner', {
                 resources: 0,
             });
-        if (!result) throw new Error('Sorry, id not found');
         return result as ResourceI;
     }
     async delete(id: id): Promise<void> {
@@ -66,7 +67,6 @@ export class ResourcesRepository implements ResourcesRepo {
             .populate('owner', {
                 resources: 0,
             });
-        if (result === null) throw new Error('Sorry, id not found');
         return;
     }
 }

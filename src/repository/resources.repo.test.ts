@@ -16,7 +16,10 @@ describe('Given a singleton instance of the class "ResourceRepository"', () => {
             grade: 'first',
         },
     ];
-
+    const repository = ResourcesRepository.getInstance();
+    const badFormattedId = '1';
+    const invalidId = '537b467da27b64c98b1916i2';
+    let testIds: Array<string>;
     const setUpCollection = async () => {
         await dbConnect();
         await ResourceModel.deleteMany();
@@ -25,11 +28,6 @@ describe('Given a singleton instance of the class "ResourceRepository"', () => {
         console.log(data);
         return [data[0].id, data[1].id];
     };
-
-    const repository = ResourcesRepository.getInstance();
-    const badFormattedId = '1';
-    const invalidId = '537b467da27b64c98b1916i2';
-    let testIds: Array<string>;
 
     beforeAll(async () => {
         testIds = await setUpCollection();
@@ -76,31 +74,17 @@ describe('Given a singleton instance of the class "ResourceRepository"', () => {
             expect(result).toEqual(testIds[2]);
         });
     });
-
-    // describe('When GET is run and ResourceModel.findById is called', () => {
-    //     const spyModel = jest.spyOn(ResourceModel, 'findById');
-    //     test('Then, if the data is valid, it should return the resource', async () => {
-    //         const result = await repository.get(testIds[0]);
-    //         console.log(testIds[0]);
-    //         console.log(result);
-    //         console.log(result.subject);
-    //         console.log(mockData[0].subject);
-    //         expect(spyModel).toHaveBeenCalled();
-
-    //         expect(result.subject).toEqual(mockData[0].subject);
-    //     });
-    // });
-    // describe('When FIND is run and ResourceModel.findOne is called', () => {
-    //     const spyModel = jest.spyOn(ResourceModel, 'findOne');
-    //     test('Then, if the data is valid, it should return the resource', async () => {
-    //         const search = {
-    //             subject: 'reading',
-    //         };
-    //         const result = await repository.find(search);
-
-    //         expect(spyModel).toHaveBeenCalled();
-
-    //         expect(result).toContain(search);
-    //     });
-    // });
+    describe('When GET is run and ResourceModel.findById is called', () => {
+        test('Then, if the data is valid, it should return the resource', async () => {
+            const result = await repository.get(testIds[1]);
+            expect(result.title).toEqual('jigsaw');
+        });
+    });
+    describe('When FIND is run and ResourceModel.findOne is called', () => {
+        test('Then, if the data is valid, it should return the resource', async () => {
+            const result = await repository.query('title', 'jigsaw');
+            expect(result[0].title).toEqual('jigsaw');
+        });
+    });
+    afterAll(() => mongoose.disconnect());
 });
