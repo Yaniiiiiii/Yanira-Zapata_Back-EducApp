@@ -9,13 +9,13 @@ export interface ResourcesRepo {
     find: (search: any) => Promise<Array<ResourceI>>;
     post: (data: Partial<ResourceI>) => Promise<ResourceI>;
     patch: (id: id, data: Partial<ResourceI>) => Promise<ResourceI>;
-    delete: (id: id) => Promise<id>;
+    delete: (id: id) => Promise<void>;
 }
 
 export interface UserRepo {
-    get: (id: id) => Promise<UserI>;
-    post: (data: Partial<UserI>) => Promise<UserI>;
-    patch: (id: id, data: Partial<UserI>) => Promise<UserI>;
+    getOne: (id: id) => Promise<UserI>;
+    create: (data: Partial<UserI>) => Promise<UserI>;
+    updateUser: (id: id, data: Partial<UserI>) => Promise<UserI>;
     find: (data: any) => Promise<UserI>;
     //delete: (id: id) => Promise<id>;
 }

@@ -51,10 +51,12 @@ export const userSchema = new Schema<UserI>({
     role: String,
     school: String,
     grade: String,
-    resources: {
-        type: [Schema.Types.ObjectId],
-        ref: 'resources',
-    },
+    resources: [
+        {
+            type: [Schema.Types.ObjectId],
+            ref: 'resources',
+        },
+    ],
     favorites: Array<ResourceI>,
     carts: Array<ResourceI>,
     id: String,

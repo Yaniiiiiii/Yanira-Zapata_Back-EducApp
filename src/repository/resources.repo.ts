@@ -26,26 +26,26 @@ export class ResourcesRepository implements ResourcesRepo {
     }
 
     async get(id: id): Promise<ResourceI> {
-        const result = await this.#Model.findById(id);
+        const result = await this.#Model
+            .findById(id)
+            .populate('owner', { resources: 0 });
         return result as ResourceI;
     }
 
-    async find(search: {
-        [key: string]: string | number;
-    }): Promise<Array<ResourceI>> {
+    async find(search: { [key: string]: string }): Promise<Array<ResourceI>> {
         const result = await this.#Model.findOne(search).populate('owner', {
             resources: 0,
         });
-        if (!result) throw new Error('Sorry, id not found');
         return result as unknown as ResourceI[];
     }
 
-    async post(data: ProtoResourceI): Promise<ResourceI> {
+    async post(data: Partial<ProtoResourceI>): Promise<ResourceI> {
         const result = await (
             await this.#Model.create(data)
         ).populate('owner', {
             resources: 0,
         });
+
         return result as ResourceI;
     }
 
@@ -60,13 +60,13 @@ export class ResourcesRepository implements ResourcesRepo {
         if (!result) throw new Error('Sorry, id not found');
         return result as ResourceI;
     }
-    async delete(id: id): Promise<id> {
+    async delete(id: id): Promise<void> {
         const result = await this.#Model
             .findByIdAndDelete(id)
             .populate('owner', {
                 resources: 0,
             });
         if (result === null) throw new Error('Sorry, id not found');
-        return id;
+        return;
     }
 }
