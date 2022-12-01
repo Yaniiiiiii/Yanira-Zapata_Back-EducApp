@@ -20,24 +20,25 @@ export class UsersRepository implements UserRepo {
     }
 
     async getOne(id: id): Promise<UserI> {
-        debug('get, id');
-        const result = await this.#Model.findById(id);
-        if (!result) throw new Error('Sorry, id not found');
-        return result;
+        debug('getOne', id);
+        const result = await this.#Model
+            .findById(id)
+            .populate('resources', { owner: 0 });
+        return result as UserI;
     }
 
     async create(data: Partial<UserI>): Promise<UserI> {
-        debug('post', data);
-        if (typeof data.password !== 'string') throw new Error('');
+        debug('create', data);
+        if (typeof data.password !== 'string')
+            throw new Error('Introduce a correct password');
         data.password = await this.password.encrypt(data.password);
         const result = await this.#Model.create(data);
         return result;
     }
-    async find(search: { [key: string]: string }): Promise<UserI> {
-        debug('find', { search });
-        const result = await this.#Model.findOne(search);
-        if (!result) throw new Error('Sorry, id not found');
-        return result;
+
+    async query(key: string, value: string): Promise<Array<UserI>> {
+        const result = await this.#Model.find({ [key]: value });
+        return result as unknown as Array<UserI>;
     }
 
     async updateUser(id: id, data: Partial<UserI>): Promise<UserI> {
@@ -48,7 +49,6 @@ export class UsersRepository implements UserRepo {
             .populate('resources', {
                 users: 0,
             });
-        if (!result) throw new Error('Sorry, id not found');
         return result as UserI;
     }
 }

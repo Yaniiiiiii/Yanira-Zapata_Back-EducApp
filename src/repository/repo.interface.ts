@@ -1,7 +1,7 @@
 import { ResourceI } from '../entities/resources.js';
 import { UserI } from '../entities/users.js';
 
-export type id = string | number;
+export type id = string;
 
 export interface ResourcesRepo {
     getAll: () => Promise<Array<ResourceI>>;
@@ -16,6 +16,6 @@ export interface UserRepo {
     getOne: (id: id) => Promise<UserI>;
     create: (data: Partial<UserI>) => Promise<UserI>;
     updateUser: (id: id, data: Partial<UserI>) => Promise<UserI>;
-    find: (key: string, value: string) => Promise<UserI>;
+    query: (key: string, value: string) => Promise<Array<UserI>>;
     //delete: (id: id) => Promise<id>;
 }

@@ -59,7 +59,6 @@ export const userSchema = new Schema<UserI>({
     ],
     favorites: Array<ResourceI>,
     carts: Array<ResourceI>,
-    id: String,
 });
 
 userSchema.set('toJSON', {
@@ -67,6 +66,7 @@ userSchema.set('toJSON', {
         returnedObject.id = returnedObject._id;
         delete returnedObject.__v;
         delete returnedObject._id;
+        delete returnedObject.password;
     },
 });
 export const UserModel = model<UserI>('user', userSchema, 'users');
