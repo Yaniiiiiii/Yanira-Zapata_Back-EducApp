@@ -17,8 +17,7 @@ describe('Given a singleton instance of the class "ResourceRepository"', () => {
         },
     ];
     const repository = ResourcesRepository.getInstance();
-    const badFormattedId = '1';
-    const invalidId = '537b467da27b64c98b1916i2';
+
     let testIds: Array<string>;
     const setUpCollection = async () => {
         await dbConnect();
@@ -68,21 +67,21 @@ describe('Given a singleton instance of the class "ResourceRepository"', () => {
     describe('When DELETE is run and ResourceModel.delete is called', () => {
         const spyModel = jest.spyOn(ResourceModel, 'findByIdAndDelete');
         test('Then, if the data is valid, it should return the id', async () => {
-            const result = await repository.delete(testIds[0]);
+            const result = await repository.delete(testIds[1]);
             expect(spyModel).toHaveBeenCalled();
-            expect(result).toEqual(testIds[2]);
+            expect(result).toEqual(testIds[1]);
         });
     });
     describe('When GET is run and ResourceModel.findById is called', () => {
         test('Then, if the data is valid, it should return the resource', async () => {
-            const result = await repository.get(testIds[1]);
-            expect(result.title).toEqual('jigsaw');
+            const result = await repository.get(testIds[0]);
+            expect(result.title).toEqual('ScapeRoom');
         });
     });
     describe('When FIND is run and ResourceModel.findOne is called', () => {
         test('Then, if the data is valid, it should return the resource', async () => {
-            const result = await repository.query('title', 'jigsaw');
-            expect(result[0].title).toEqual('jigsaw');
+            const result = await repository.query('title', 'ScapeRoom');
+            expect(result[0].title).toEqual('ScapeRoom');
         });
     });
     afterAll(() => {

@@ -3,8 +3,6 @@ import { UsersRepository } from '../repository/users.repo';
 import { ResourcesRepository } from '../repository/resources.repo';
 import { NextFunction, Request, Response } from 'express';
 
-// jest.mock('../repository/users.repo');
-
 describe('Given the UserController', () => {
     const mockUser = [
         {
@@ -25,10 +23,13 @@ describe('Given the UserController', () => {
     const repository = UsersRepository.getInstance();
     const resourceRepo = ResourcesRepository.getInstance();
     UsersRepository.prototype.getOne = jest.fn().mockResolvedValue(mockUser);
-    UsersRepository.prototype.create = jest.fn().mockResolvedValue(mockToken);
-    UsersRepository.prototype.query = jest.fn().mockResolvedValue([mockUser]);
+    UsersRepository.prototype.addUser = jest.fn().mockResolvedValue(mockToken);
+    UsersRepository.prototype.query = jest.fn().mockResolvedValue(mockUser);
 
     const userController = new UserController(repository, resourceRepo);
+    userController.password.validate = jest.fn().mockReturnValue(true);
+    userController.token.createToken = jest.fn().mockResolvedValue(mockToken);
+
     const next: NextFunction = jest.fn();
     const req: Partial<Request> = {};
     const resp: Partial<Response> = {
@@ -53,6 +54,8 @@ describe('Given the UserController', () => {
             req.body = {
                 id: mockUser[0].id,
                 name: mockUser[0].name,
+                email: mockUser[0].email,
+                passwd: mockUser[0].passwd,
             };
             await userController.login(
                 req as Request,
@@ -60,6 +63,7 @@ describe('Given the UserController', () => {
                 next as NextFunction
             );
             expect(resp.json).toHaveBeenCalledWith(mockToken);
+            expect(resp.status).toHaveBeenCalledWith(200);
         });
     });
 });

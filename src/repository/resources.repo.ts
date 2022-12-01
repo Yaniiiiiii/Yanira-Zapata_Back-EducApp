@@ -61,12 +61,10 @@ export class ResourcesRepository implements ResourcesRepo {
             });
         return result as ResourceI;
     }
-    async delete(id: id): Promise<void> {
-        const result = await this.#Model
-            .findByIdAndDelete(id)
-            .populate('owner', {
-                resources: 0,
-            });
-        return;
+    async delete(id: id): Promise<id> {
+        await this.#Model.findByIdAndDelete(id).populate('owner', {
+            resources: 0,
+        });
+        return id;
     }
 }

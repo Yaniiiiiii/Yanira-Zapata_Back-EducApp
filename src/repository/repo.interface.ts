@@ -9,7 +9,7 @@ export interface ResourcesRepo {
     query: (key: string, value: string) => Promise<Array<ResourceI>>;
     post: (data: Partial<ResourceI>) => Promise<ResourceI>;
     patch: (id: id, data: Partial<ResourceI>) => Promise<ResourceI>;
-    delete: (id: id) => Promise<void>;
+    delete: (id: id) => Promise<id>;
 }
 
 export interface UserRepo {

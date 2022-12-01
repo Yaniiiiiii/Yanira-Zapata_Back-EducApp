@@ -1,45 +1,38 @@
-// import { HTTPError } from "./interfaces/error";
+import { HTTPError } from './interfaces/error.js';
 
-// export class UserErrorController {
+export class UserErrorController {
+    login(error: Error) {
+        if (error.message === 'Sorry, User not found.') {
+            const httpError = new HTTPError(
+                404,
+                'Sorry, password not valid.',
+                error.message
+            );
+            return httpError;
+        }
 
-//     register {
-//         if(req.body.email)
-//         //
+        if (error.message === 'Sorry, password not valid.') {
+            const httpError = new HTTPError(
+                403,
+                'Sorry, password not valid.',
+                error.message
+            );
+            return httpError;
+        }
 
-//     }
-
-//     loginError {
-//           if (!checkUser) throw new Error('');
-
-//     }
-//     // serviceUnvailable = {
-
-//     // httpError = new HTTPError(
-//     //     503,
-//     //     'Sorry, service temporally unavailable',
-//     //     (error as Error).message
-//     // );
-//     // return http}
-// }
-
-// export class ResourcesErrorController {
-
-//     register {
-//         if(req.body.email)
-//         //
-
-//     }
-
-//     loginError {
-//           if (!checkUser) throw new Error('');
-
-//     }
-//     // serviceUnvailable = {
-
-//     // httpError = new HTTPError(
-//     //     503,
-//     //     'Sorry, service temporally unavailable',
-//     //     (error as Error).message
-//     // );
-//     // return http}
-// }
+        const httpError = new HTTPError(
+            503,
+            'Service unavailable',
+            (error as Error).message
+        );
+        return httpError;
+    }
+    register(error: Error) {
+        const httpError = new HTTPError(
+            503,
+            'Service unavailable',
+            (error as Error).message
+        );
+        return httpError;
+    }
+}
