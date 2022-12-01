@@ -8,17 +8,14 @@ export class UserController {
     password = new Password();
     token = new Auth();
 
-    constructor(
-        public readonly repository: UserRepo,
-        public readonly resourcesRepo: ResourcesRepo
-    ) {}
+    constructor(public readonly repository: UserRepo) {}
     async register(req: Request, resp: Response, next: NextFunction) {
         try {
-            const user = await this.repository.create(req.body);
+            const user = await this.repository.addUser(req.body);
             resp.status(200);
             resp.json({ user });
         } catch (error) {
-            next();
+            next('que tal');
         }
     }
 

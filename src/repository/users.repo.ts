@@ -27,8 +27,7 @@ export class UsersRepository implements UserRepo {
         return result as UserI;
     }
 
-    async create(data: Partial<UserI>): Promise<UserI> {
-        debug('create', data);
+    async addUser(data: Partial<UserI>): Promise<UserI> {
         if (typeof data.password !== 'string')
             throw new Error('Introduce a correct password');
         data.password = await this.password.encrypt(data.password);

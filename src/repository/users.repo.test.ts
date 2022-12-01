@@ -33,14 +33,12 @@ describe('Given a singleton instance of the class "UsersRepository"', () => {
         await UserModel.deleteMany();
         await UserModel.insertMany(mockData);
         const data = await UserModel.find();
-        console.log(data);
 
         return [data[0].id, data[1].id];
     };
 
     beforeAll(async () => {
         testIds = await setUpCollection();
-        console.log(testIds);
     });
 
     describe('When getOne is run"', () => {
@@ -49,14 +47,14 @@ describe('Given a singleton instance of the class "UsersRepository"', () => {
             expect(result.email).toEqual(mockData[1].email);
         });
     });
-    describe('When create is run"', () => {
+    describe('When addUser is run"', () => {
         test('Then it returns the resources in the collection', async () => {
-            await repository.create(mockNewUser);
+            await repository.addUser(mockNewUser);
             expect(mockNewUser.name).toEqual('Yanira');
         });
         test('then if the password is not a string it should throw an error', async () => {
             expect(
-                async () => await repository.create(mockUserWrongPass)
+                async () => await repository.addUser(mockUserWrongPass)
             ).rejects.toThrowError('');
         });
     });

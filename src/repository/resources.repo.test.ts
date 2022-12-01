@@ -25,13 +25,12 @@ describe('Given a singleton instance of the class "ResourceRepository"', () => {
         await ResourceModel.deleteMany();
         await ResourceModel.insertMany(mockData);
         const data = await ResourceModel.find();
-        console.log(data);
+
         return [data[0].id, data[1].id];
     };
 
     beforeAll(async () => {
         testIds = await setUpCollection();
-        console.log(testIds);
     });
     describe('When it has been run GETALL and it has called Model.find', () => {
         test('Then it returns the resources in the collection', async () => {
