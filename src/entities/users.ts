@@ -54,11 +54,21 @@ export const userSchema = new Schema<UserI>({
     resources: [
         {
             type: [Schema.Types.ObjectId],
-            ref: 'resources',
+            ref: 'resource',
         },
     ],
-    favorites: Array<ResourceI>,
-    carts: Array<ResourceI>,
+    favorites: [
+        {
+            type: [Schema.Types.ObjectId],
+            ref: 'resource',
+        },
+    ],
+    carts: [
+        {
+            type: [Schema.Types.ObjectId],
+            ref: 'resource',
+        },
+    ],
 });
 
 userSchema.set('toJSON', {
