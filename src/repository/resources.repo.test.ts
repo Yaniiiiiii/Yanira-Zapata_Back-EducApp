@@ -85,5 +85,7 @@ describe('Given a singleton instance of the class "ResourceRepository"', () => {
             expect(result[0].title).toEqual('jigsaw');
         });
     });
-    afterAll(() => mongoose.disconnect());
+    afterAll(() => {
+        mongoose.disconnect();
+    });
 });
