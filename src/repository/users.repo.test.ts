@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import { UserModel } from '../entities/users';
 import { dbConnect } from '../services/dbconnect';
 import { UsersRepository } from './users.repo';
@@ -70,5 +71,8 @@ describe('Given a singleton instance of the class "UsersRepository"', () => {
             const result = await repository.updateUser(testIds[0], mockData[0]);
             expect(result.name).toBe(mockData[0].name);
         });
+    });
+    afterAll(() => {
+        mongoose.disconnect();
     });
 });
