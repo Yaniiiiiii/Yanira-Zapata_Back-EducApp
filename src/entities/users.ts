@@ -1,5 +1,4 @@
 import { model, Schema, Types } from 'mongoose';
-import { ResourceI } from './resources.js';
 
 export type ProtoUserI = {
     name?: string;

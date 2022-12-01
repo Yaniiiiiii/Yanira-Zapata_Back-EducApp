@@ -1,49 +1,45 @@
-import { HTTPError } from "./interfaces/error";
+// import { HTTPError } from "./interfaces/error";
 
-export class UserErrorController {
+// export class UserErrorController {
 
+//     register {
+//         if(req.body.email)
+//         //
 
-    register {
-        if(req.body.email)
-        //
+//     }
 
-    }
+//     loginError {
+//           if (!checkUser) throw new Error('');
 
+//     }
+//     // serviceUnvailable = {
 
-    loginError {
-          if (!checkUser) throw new Error('');
+//     // httpError = new HTTPError(
+//     //     503,
+//     //     'Sorry, service temporally unavailable',
+//     //     (error as Error).message
+//     // );
+//     // return http}
+// }
 
-    }
-    // serviceUnvailable = {
-    
-    // httpError = new HTTPError(
-    //     503,
-    //     'Sorry, service temporally unavailable',
-    //     (error as Error).message
-    // );
-    // return http}
-}
+// export class ResourcesErrorController {
 
-export class ResourcesErrorController {
+//     register {
+//         if(req.body.email)
+//         //
 
+//     }
 
-    register {
-        if(req.body.email)
-        //
+//     loginError {
+//           if (!checkUser) throw new Error('');
 
-    }
+//     }
+//     // serviceUnvailable = {
 
-
-    loginError {
-          if (!checkUser) throw new Error('');
-
-    }
-    // serviceUnvailable = {
-    
-    // httpError = new HTTPError(
-    //     503,
-    //     'Sorry, service temporally unavailable',
-    //     (error as Error).message
-    // );
-    // return http}
-}
+//     // httpError = new HTTPError(
+//     //     503,
+//     //     'Sorry, service temporally unavailable',
+//     //     (error as Error).message
+//     // );
+//     // return http}
+// }
