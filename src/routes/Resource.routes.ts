@@ -15,5 +15,13 @@ ResourceRouter.get('/', controller.allResources.bind(controller));
 ResourceRouter.get('/:id', controller.getResource.bind(controller));
 ResourceRouter.get('/:key/:value', controller.findResource.bind(controller));
 ResourceRouter.post('/', logged, controller.createResource.bind(controller));
-ResourceRouter.patch('/:id', controller.updateResource.bind(controller));
-ResourceRouter.delete('/:id', controller.deleteResource.bind(controller));
+ResourceRouter.patch(
+    '/:id',
+    logged,
+    controller.updateResource.bind(controller)
+);
+ResourceRouter.delete(
+    '/:id',
+    logged,
+    controller.deleteResource.bind(controller)
+);

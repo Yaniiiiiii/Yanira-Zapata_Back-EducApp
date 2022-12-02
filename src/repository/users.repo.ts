@@ -46,7 +46,7 @@ export class UsersRepository implements UserRepo {
                 new: true,
             })
             .populate('resources', {
-                users: 0,
+                owner: 0,
             });
         return result as UserI;
     }

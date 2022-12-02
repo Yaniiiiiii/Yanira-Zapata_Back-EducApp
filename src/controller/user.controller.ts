@@ -43,4 +43,30 @@ export class UserController {
             next(this.error.login(error as Error));
         }
     }
+
+    async addFavorites(req: Request, resp: Response, next: NextFunction) {
+        try {
+            const user = await this.repository.updateUser(
+                req.body.id,
+                req.body
+            );
+            resp.status(200);
+            resp.json({ user });
+        } catch (error) {
+            next(this.error.register(error as Error));
+        }
+    }
+
+    async deleteFavorites(req: Request, resp: Response, next: NextFunction) {
+        try {
+            const user = await this.repository.updateUser(
+                req.body.id,
+                req.body
+            );
+            resp.status(200);
+            resp.json({ user });
+        } catch (error) {
+            next(this.error.register(error as Error));
+        }
+    }
 }

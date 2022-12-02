@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
+import { JwtPayload } from 'jsonwebtoken';
 import { CustomError, HTTPError } from '../../Error/interfaces/error';
+import { ExtraRequest } from '../../middlewares/interceptors';
 import { ResourcesRepository } from '../../repository/resources.repo';
 import { UsersRepository } from '../../repository/users.repo';
 import { ResourceController } from '../resources.controller/resources.controller';
@@ -9,7 +11,6 @@ describe('Given resource Controller', () => {
         const mockData = [
             {
                 id: '2',
-
                 title: 'puzzle',
                 subject: 'reading',
                 grade: 'first',
@@ -26,22 +27,31 @@ describe('Given resource Controller', () => {
             .fn()
             .mockResolvedValue(mockData[0]);
 
-        ResourcesRepository.prototype.delete = jest
-            .fn()
-            .mockResolvedValue(mockData);
         const repository = ResourcesRepository.getInstance();
         repository.getAll = jest.fn().mockResolvedValue(mockData);
         repository.get = jest.fn().mockResolvedValue(mockData[0]);
+        repository.delete = jest.fn().mockResolvedValue(mockData[1].id);
+        repository.post = jest.fn().mockResolvedValue(mockData[0].id);
         repository.patch = jest.fn().mockResolvedValue(mockData[0]);
+        repository.query = jest.fn().mockResolvedValue(mockData);
         const userRepository = UsersRepository.getInstance();
+        userRepository.getOne = jest
+            .fn()
+            .mockResolvedValue({ id: '34', resources: [] });
+        userRepository.updateUser = jest.fn();
 
         const resourceController = new ResourceController(
             repository,
             userRepository
         );
-        const req: Partial<Request> = {};
+        const req: Partial<ExtraRequest> = {
+            params: { key: 'math', value: 'first' },
+            body: { owner: 'owner' },
+            payload: 'payload' as unknown as JwtPayload,
+        };
         const res: Partial<Response> = {
             json: jest.fn(),
+            status: jest.fn(),
         };
         const next: NextFunction = jest.fn();
         test('Then allResources should have been called', async () => {
@@ -63,6 +73,14 @@ describe('Given resource Controller', () => {
             expect(res.json).toHaveBeenCalledWith({ resource: mockData });
         });
 
+        test('Then findResource should have been called', async () => {
+            await resourceController.findResource(
+                req as Request,
+                res as Response,
+                next
+            );
+            expect(res.json).toHaveBeenCalledWith({ resource: mockData });
+        });
         test('Then createResource should have been called', async () => {
             await resourceController.createResource(
                 req as Request,
@@ -80,13 +98,14 @@ describe('Given resource Controller', () => {
             );
             expect(res.json).toHaveBeenCalledWith({ resource: mockData });
         });
+
         test('Then deleteResource should have been called', async () => {
             await resourceController.deleteResource(
                 req as Request,
                 res as Response,
                 next
             );
-            expect(res.json).toHaveBeenCalledWith({ resource: mockData });
+            expect(res.json).toHaveBeenCalledWith({ resource: mockData[1].id });
         });
     });
 
