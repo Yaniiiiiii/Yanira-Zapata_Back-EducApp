@@ -36,3 +36,30 @@ export class UserErrorController {
         return httpError;
     }
 }
+
+export class ErrorResourcesController {
+    allResources(error: Error) {
+        if (error.message === 'Invalid payload') {
+            const httpError = new HTTPError(
+                500,
+                'Invalid Payload',
+                error.message
+            );
+            return httpError.message;
+        }
+        const httpError = new HTTPError(
+            500,
+            'Sorry, out of service.',
+            error.message
+        );
+        return httpError.message;
+    }
+    getResource(error: Error) {
+        const httpError = new HTTPError(
+            500,
+            'Sorry, out of service.',
+            error.message
+        );
+        return httpError.message;
+    }
+}
