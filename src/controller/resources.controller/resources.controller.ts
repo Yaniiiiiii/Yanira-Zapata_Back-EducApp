@@ -27,8 +27,8 @@ export class ResourceController {
     async findResource(req: Request, resp: Response, next: NextFunction) {
         try {
             const resource = await this.repository.query(
-                req.params.key,
-                req.params.value
+                req.params.value,
+                req.params.key
             );
             resp.json({ resource });
         } catch (error) {
@@ -36,7 +36,6 @@ export class ResourceController {
         }
     }
     async createResource(req: Request, resp: Response, next: NextFunction) {
-        console.log('te meto un buco');
         try {
             const user = await this.repository.get(req.params.id);
             resp.json({ user });

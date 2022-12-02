@@ -22,7 +22,10 @@ export class ResourcesRepository implements ResourcesRepo {
     }
 
     async getAll(): Promise<Array<ResourceI>> {
-        return this.#Model.find().populate('owner', { resources: 0 });
+        const result = await this.#Model
+            .find()
+            .populate('owner', { resources: 0 });
+        return result;
     }
 
     async get(id: id): Promise<ResourceI> {

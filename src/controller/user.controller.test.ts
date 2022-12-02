@@ -62,7 +62,7 @@ describe('Given the UserController', () => {
                 resp as Response,
                 next as NextFunction
             );
-            expect(resp.json).toHaveBeenCalledWith(mockToken);
+            expect(resp.json).toHaveBeenCalledWith({ token: mockToken });
             expect(resp.status).toHaveBeenCalledWith(200);
         });
     });

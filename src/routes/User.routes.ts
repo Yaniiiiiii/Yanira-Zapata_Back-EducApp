@@ -5,7 +5,10 @@ import { UsersRepository } from '../repository/users.repo.js';
 
 export const userRouter = Router();
 
-export const controller = new UserController(UsersRepository.getInstance());
+export const controller = new UserController(
+    UsersRepository.getInstance(),
+    ResourcesRepository.getInstance()
+);
 
 userRouter.post('/login', controller.login.bind(controller));
 userRouter.post('/register', controller.register.bind(controller));

@@ -5,7 +5,7 @@ export class UserErrorController {
         if (error.message === 'Sorry, User not found.') {
             const httpError = new HTTPError(
                 404,
-                'Sorry, password not valid.',
+                'Sorry, User not found.',
                 error.message
             );
             return httpError;
