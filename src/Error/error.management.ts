@@ -8,7 +8,7 @@ export class UserErrorController {
                 'Sorry, User not found.',
                 error.message
             );
-            return httpError;
+            return httpError.message;
         }
 
         if (error.message === 'Sorry, password not valid.') {
@@ -38,7 +38,7 @@ export class UserErrorController {
 }
 
 export class ErrorResourcesController {
-    allResources(error: Error) {
+    createResource(error: Error) {
         if (error.message === 'Invalid payload') {
             const httpError = new HTTPError(
                 500,
@@ -54,7 +54,7 @@ export class ErrorResourcesController {
         );
         return httpError.message;
     }
-    getResource(error: Error) {
+    errorControl(error: Error) {
         const httpError = new HTTPError(
             500,
             'Sorry, out of service.',

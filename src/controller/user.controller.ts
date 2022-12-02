@@ -20,7 +20,7 @@ export class UserController {
             resp.status(200);
             resp.json({ user });
         } catch (error) {
-            next(this.error.register);
+            next(this.error.register(error as Error));
         }
     }
 
@@ -40,7 +40,7 @@ export class UserController {
             resp.status(200);
             resp.json({ token });
         } catch (error) {
-            next(this.error.login);
+            next(this.error.login(error as Error));
         }
     }
 }

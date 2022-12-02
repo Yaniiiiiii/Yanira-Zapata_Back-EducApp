@@ -50,7 +50,6 @@ export class ResourcesRepository implements ResourcesRepo {
         ).populate('owner', {
             resources: 0,
         });
-
         return result as ResourceI;
     }
 
