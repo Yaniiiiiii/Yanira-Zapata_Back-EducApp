@@ -14,7 +14,7 @@ export const controller = new UserController(
 userRouter.post('/login', controller.login.bind(controller));
 userRouter.post('/register', controller.register.bind(controller));
 userRouter.patch(
-    '/addFavorites',
+    '/addFavorites/:id',
     logged,
     controller.addFavorites.bind(controller)
 );

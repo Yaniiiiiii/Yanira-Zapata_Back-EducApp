@@ -3,6 +3,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import { userRouter } from './routes/User.routes.js';
 import { ResourceRouter } from './routes/Resource.routes.js';
+import { errorManager } from './middlewares/error.js';
 
 export const app = express();
 app.disable('x-powered-by');
@@ -20,3 +21,4 @@ app.get('/', (_req, res) => {
 
 app.use('/users', userRouter);
 app.use('/resources', ResourceRouter);
+app.use(errorManager);
