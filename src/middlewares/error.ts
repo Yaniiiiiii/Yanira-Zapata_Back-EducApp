@@ -19,5 +19,7 @@ export const errorManager = (
         type: error.name,
         error: error.message,
     };
-    resp.status(status).json(result).end();
+    resp.status(status);
+    resp.json(result);
+    resp.end();
 };
