@@ -45,6 +45,16 @@ export class UserController {
         }
     }
 
+    async deleteUser(req: ExtraRequest, resp: Response, next: NextFunction) {
+        try {
+            if (!req.payload) throw new Error('Sorry, invalid payload');
+            const user = await this.repository.deleteUser(req.payload.id);
+            resp.json(user);
+        } catch (error) {
+            next(this.error.login(error as Error));
+        }
+    }
+
     async addFavorites(req: ExtraRequest, resp: Response, next: NextFunction) {
         try {
             const addFav = await this.resourceRepo.get(req.params.id);

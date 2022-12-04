@@ -35,6 +35,11 @@ export class UsersRepository implements UserRepo {
         return result;
     }
 
+    async deleteUser(id: id): Promise<id> {
+        await this.#Model.findByIdAndDelete(id);
+        return id;
+    }
+
     async query(key: string, value: string): Promise<Array<UserI>> {
         const result = await this.#Model.find({ [key]: value });
         return result as unknown as Array<UserI>;

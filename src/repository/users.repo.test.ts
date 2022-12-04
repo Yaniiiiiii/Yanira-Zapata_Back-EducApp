@@ -72,6 +72,13 @@ describe('Given a singleton instance of the class "UsersRepository"', () => {
             expect(result.name).toBe(mockData[0].name);
         });
     });
+    describe('When deleteUser is run', () => {
+        test('should  return the id', async () => {
+            const result = await repository.deleteUser(testIds[0]);
+            expect(result).toEqual(testIds[0]);
+        });
+    });
+
     afterAll(() => {
         mongoose.disconnect();
     });
