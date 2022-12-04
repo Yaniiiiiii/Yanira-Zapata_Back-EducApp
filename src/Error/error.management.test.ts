@@ -50,6 +50,7 @@ describe('Given ErrorUserController', () => {
             expect(result).toBe('');
         });
     });
+
     describe('When we call the class methods of ErrorResourcesController', () => {
         const errors = new ErrorResourcesController();
         test('then the createResource should return a error message', () => {
@@ -80,6 +81,7 @@ describe('Given ErrorUserController', () => {
             expect(result).toBe('User not found');
         });
     });
+
     describe('When we call the class methods of ErrorMiddlewares', () => {
         const errors = new ErrorMiddlewares();
         test('then the logged should return a error message', () => {
