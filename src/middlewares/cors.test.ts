@@ -17,10 +17,6 @@ describe('Given the setCors middleware', () => {
             };
             setCors(req as Request, res as Response, next);
             expect(res.setHeader).toBeCalled();
-            expect(res.setHeader).toHaveBeenCalledWith(
-                'Access-Control-Allow-Origin'
-            );
-            expect(res.setHeader).toHaveBeenCalledWith('*');
         });
 
         test('Then when the request header is "Origin", it should add "Origin"', () => {
