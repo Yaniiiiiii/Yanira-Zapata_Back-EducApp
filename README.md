@@ -10,23 +10,11 @@ los de otros usuarios(extra).
 
 La aplicación web incluye las 4 funcionalidades básicas del acrónimo CRUD cuyas siglas en inglés se refieren a: "Create, Read, Update and Delete".
 
-1.  Endopoint: /resources, incluye:
+Endopoint: /resources, incluye:
+[get]/ [get]/:id [get]/query/:key/:value [post]/ [patch]/:id [delete]/:id
 
--   Get: muestra la lista completa de recursos educativos (/resources/).
--   Get: muestra la página de detalles de cada recurso educativo (/resources/:id).
--   Get:
-    -   FindByGrade: encontrar recursos en función del curso escolar (/resources/:grade).
-    -   FindBySubject: encontrar recursos en función de la asignatura (/resources/:subject).
--   Post: Permite que los usuarios logeados suban contenido educativo (/resources/).
--   Patch: Permite que los usuarios logeados y que hayan subido el recurso educativo puedan modificar sus recursos (/resources/update/:id).
-
--   Delete: Permite que los usuarios logeados eliminen recursos de la plataforma (/resources/:id).
-
-2. Endopoint: /users, incluye:
-
--   Post: cuando los usuarios se registren (/users/register).
--   Post: cuando los usuarios inicien sesión (/users/login).
--   Patch: Permite que los usuarios logeados y que hayan subido el recurso educativo puedan añadir y eliminar sus recursos a la lista de favoritos(/resources/updateFavorites/:id).
+Endopoint: /users, incluye:
+[post]/register [post]/login [patch]/addFavorites/:id [patch]/deleteFavorites/:id
 
 ## Modelo de datos
 
@@ -53,6 +41,6 @@ format: string,
 owner: Id,
 id: string,
 
-## Prototipo creado con Figma
+## Otra información de interés
 
-https://www.figma.com/proto/0dd80mstJQ1LvW7m1v5LL0/Final-project?node-id=21%3A445&scaling=scale-down&page-id=0%3A1&starting-point-node-id=10%3A288&show-proto-sidebar=1
+Ejecuta npm install en la temrinal para descargar las librerias del "package.json".
