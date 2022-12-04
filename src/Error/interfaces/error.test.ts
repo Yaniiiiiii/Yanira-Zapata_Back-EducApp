@@ -1,4 +1,4 @@
-import { CustomError, HTTPError } from './error';
+import { CustomError, HTTPError } from './error.js';
 
 describe('Given the error interface', () => {
     let error: CustomError;

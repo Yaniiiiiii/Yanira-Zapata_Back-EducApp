@@ -1,5 +1,4 @@
 import { model, Schema, Types } from 'mongoose';
-import { ResourceI } from './resources.js';
 
 export type ProtoUserI = {
     name?: string;
@@ -51,13 +50,24 @@ export const userSchema = new Schema<UserI>({
     role: String,
     school: String,
     grade: String,
-    resources: {
-        type: [Schema.Types.ObjectId],
-        ref: 'resources',
-    },
-    favorites: Array<ResourceI>,
-    carts: Array<ResourceI>,
-    id: String,
+    resources: [
+        {
+            type: [Schema.Types.ObjectId],
+            ref: 'resource',
+        },
+    ],
+    favorites: [
+        {
+            type: [Schema.Types.ObjectId],
+            ref: 'resource',
+        },
+    ],
+    carts: [
+        {
+            type: [Schema.Types.ObjectId],
+            ref: 'resource',
+        },
+    ],
 });
 
 userSchema.set('toJSON', {
@@ -65,6 +75,7 @@ userSchema.set('toJSON', {
         returnedObject.id = returnedObject._id;
         delete returnedObject.__v;
         delete returnedObject._id;
+        delete returnedObject.password;
     },
 });
-export const UsersModel = model<UserI>('user', userSchema, 'users');
+export const UserModel = model<UserI>('user', userSchema, 'users');

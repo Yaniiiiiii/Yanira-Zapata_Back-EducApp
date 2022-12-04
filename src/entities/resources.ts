@@ -23,24 +23,41 @@ export type ResourceI = {
     id: Types.ObjectId;
 };
 
-export type SubjectI = {
-    math: string;
-    reading: string;
-    science: string;
-    writing: string;
-    pe: string;
-    arts: string;
-};
+export type SubjectI =
+    | 'math'
+    | 'reading'
+    | 'science'
+    | 'writing'
+    | 'pe'
+    | 'arts';
 
-export type GradeI = {
-    kinder: string;
-    first: string;
-    second: string;
-    third: string;
-    fourth: string;
-    fifth: string;
-    sixth: string;
-};
+export type GradeI =
+    | 'kinder'
+    | 'first'
+    | 'second'
+    | 'third'
+    | 'fourth'
+    | 'fifth'
+    | 'sixth';
+
+enum EnumSubject {
+    math = 'math',
+    reading = 'reading',
+    science = 'science',
+    writing = 'writing',
+    pe = 'pe',
+    arts = 'arts',
+}
+
+enum EnumGrade {
+    kinder = 'kinder',
+    first = 'first',
+    second = 'second',
+    third = 'third',
+    forth = 'forth',
+    fifth = 'fifth',
+    sixth = 'sixth',
+}
 
 export const resourceSchema = new Schema<ResourceI>({
     title: {
@@ -49,12 +66,14 @@ export const resourceSchema = new Schema<ResourceI>({
         unique: true,
     },
     grade: {
-        type: {},
+        type: String,
         required: true,
+        enum: Object.values(EnumGrade),
     },
     subject: {
-        type: {},
+        type: String,
         required: true,
+        enum: Object.values(EnumSubject),
     },
     description: String,
     pages: String,

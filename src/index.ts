@@ -20,12 +20,12 @@ server.on('listening', () => {
                 ? `http://localhost:${addr?.port}`
                 : `port ${addr?.port}`;
     }
-    console.log(`Listening on ${bind}`);
+    debug(`Listening on ${bind}`);
 });
 
 dbConnect()
     .then((mongoose) => {
-        console.log('DB:', mongoose.connection.db.databaseName);
+        debug('DB:', mongoose.connection.db.databaseName);
         server.listen(port);
     })
     .catch((error) => server.emit(error));
