@@ -23,7 +23,7 @@ export class UserErrorController {
         const httpError = new HTTPError(
             503,
             'Service unavailable',
-            (error as Error).message
+            error.message
         );
         return httpError.message;
     }
@@ -31,7 +31,7 @@ export class UserErrorController {
         const httpError = new HTTPError(
             503,
             'Service unavailable',
-            (error as Error).message
+            error.message
         );
         return httpError.message;
     }
