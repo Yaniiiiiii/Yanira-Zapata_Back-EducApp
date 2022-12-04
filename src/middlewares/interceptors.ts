@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { JwtPayload } from 'jsonwebtoken';
 import { ErrorMiddlewares } from '../Error/error.management.js';
-import { HTTPError } from '../Error/interfaces/error.js';
 import { ResourcesRepository } from '../repository/resources.repo.js';
 import { Auth } from '../services/auth/auth.js';
 

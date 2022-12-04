@@ -78,7 +78,7 @@ export class ErrorMiddlewares {
     verifyUser(error: Error) {
         if (error.message === 'Some of your credentials are not correct.') {
             const loggedError = new HTTPError(
-                403,
+                400,
                 'Forbidden',
                 'Some of your credentials are not correct.'
             );
