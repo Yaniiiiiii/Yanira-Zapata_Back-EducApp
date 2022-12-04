@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { Error } from 'mongoose';
 import { UserErrorController } from '../Error/error.management.js';
+import { ExtraRequest } from '../middlewares/interceptors.js';
 import { ResourcesRepo, UserRepo } from '../repository/repo.interface.js';
 import { Auth } from '../services/auth/auth.js';
 import { Password } from '../services/auth/password.js';
@@ -44,27 +45,59 @@ export class UserController {
         }
     }
 
-    async addFavorites(req: Request, resp: Response, next: NextFunction) {
+    async addFavorites(req: ExtraRequest, resp: Response, next: NextFunction) {
         try {
-            const user = await this.repository.updateUser(
-                req.body.id,
-                req.body
-            );
-            resp.status(200);
-            resp.json({ user });
+            const addFav = await this.resourceRepo.get(req.params.id);
+
+            if (req.payload === undefined) {
+                throw new Error('Invalid payload');
+            }
+            const user = await this.repository.getOne(req.payload.id);
+
+            if (user.favorites.includes(addFav.id)) {
+                throw new Error('The resource already exist');
+            }
+
+            if (user.favorites.includes(addFav.id) === false) {
+                user.favorites.push(addFav.id);
+
+                const updateUser = await this.repository.updateUser(
+                    user.id.toString(),
+                    {
+                        favorites: user.favorites,
+                    }
+                );
+                resp.status(200);
+                resp.json(updateUser);
+            }
         } catch (error) {
             next(this.error.register(error as Error));
         }
     }
 
-    async deleteFavorites(req: Request, resp: Response, next: NextFunction) {
+    async deleteFavorites(
+        req: ExtraRequest,
+        resp: Response,
+        next: NextFunction
+    ) {
         try {
-            const user = await this.repository.updateUser(
-                req.body.id,
-                req.body
+            if (!req.payload) throw new Error('Not found payload');
+            const user = await this.repository.getOne(req.payload.id);
+
+            const deleteFav = await this.resourceRepo.get(req.params.id);
+
+            const updateWithoutResource = user.favorites.filter(
+                (song) => song.toString() !== deleteFav.id.toString()
             );
-            resp.status(200);
-            resp.json({ user });
+
+            const updateUser = await this.repository.updateUser(
+                user.id.toString(),
+                {
+                    favorites: updateWithoutResource,
+                }
+            );
+
+            resp.json({ updateUser });
         } catch (error) {
             next(this.error.register(error as Error));
         }

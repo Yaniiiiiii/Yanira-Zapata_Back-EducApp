@@ -84,11 +84,20 @@ describe('Given ErrorUserController', () => {
         const errors = new ErrorMiddlewares();
         test('then the logged should return a error message', () => {
             const mockError = new HTTPError(
-                1000,
+                500,
                 'Incorrect Password',
                 'Some of your credentials are not correct.'
             );
             const result = errors.logged(mockError);
+            expect(result).toBe('Some of your credentials are not correct.');
+        });
+        test('then the verifyUser should return a error message', () => {
+            const mockError = new HTTPError(
+                500,
+                'Incorrect Password',
+                'Some of your credentials are not correct.'
+            );
+            const result = errors.verifyUser(mockError);
             expect(result).toBe('Some of your credentials are not correct.');
         });
     });

@@ -75,4 +75,14 @@ export class ErrorMiddlewares {
             return loggedError.message;
         }
     }
+    verifyUser(error: Error) {
+        if (error.message === 'Some of your credentials are not correct.') {
+            const loggedError = new HTTPError(
+                403,
+                'Forbidden',
+                'Some of your credentials are not correct.'
+            );
+            return loggedError.message;
+        }
+    }
 }

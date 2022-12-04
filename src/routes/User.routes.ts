@@ -19,7 +19,7 @@ userRouter.patch(
     controller.addFavorites.bind(controller)
 );
 userRouter.patch(
-    '/deleteFavorites',
+    '/deleteFavorites/:id',
     logged,
     controller.deleteFavorites.bind(controller)
 );

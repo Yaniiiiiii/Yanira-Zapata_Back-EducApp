@@ -34,20 +34,14 @@ export const verifyUser = async (
     res: Response,
     next: NextFunction
 ) => {
+    const errors = new ErrorMiddlewares();
     const repo = ResourcesRepository.getInstance();
     try {
         const resource = await repo.get(req.params.id);
         if (req.payload && resource.owner._id.toString() !== req.payload.id) {
-            next(
-                new HTTPError(
-                    403,
-                    'Forbidden',
-                    'Some of your credentials are not correct.'
-                )
-            );
+            next();
         }
-        next();
     } catch (error) {
-        next(error);
+        next(errors.logged(error as Error));
     }
 };

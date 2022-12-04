@@ -22,6 +22,7 @@ describe('Given the UserController', () => {
 
     const repository = UsersRepository.getInstance();
     const resourceRepo = ResourcesRepository.getInstance();
+
     UsersRepository.prototype.getOne = jest.fn().mockResolvedValue(mockUser);
     UsersRepository.prototype.addUser = jest.fn().mockResolvedValue(mockToken);
     UsersRepository.prototype.query = jest.fn().mockResolvedValue(mockUser);
@@ -49,6 +50,7 @@ describe('Given the UserController', () => {
             expect(resp.json).toHaveBeenCalled();
         });
     });
+
     describe('When the login is run and the password is correct', () => {
         test('Then it should return a token', async () => {
             req.body = {
