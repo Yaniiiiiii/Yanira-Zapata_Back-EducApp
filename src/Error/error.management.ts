@@ -2,10 +2,10 @@ import { HTTPError } from './interfaces/error.js';
 
 export class UserErrorController {
     login(error: Error) {
-        if (error.message === 'Sorry, User not found.') {
+        if (error.message === 'Sorry, user not found.') {
             const httpError = new HTTPError(
                 404,
-                'Sorry, User not found.',
+                'Sorry, user not found.',
                 error.message
             );
             return httpError.message;
@@ -17,7 +17,7 @@ export class UserErrorController {
                 'Sorry, password not valid.',
                 error.message
             );
-            return httpError;
+            return httpError.message;
         }
 
         const httpError = new HTTPError(
@@ -25,7 +25,7 @@ export class UserErrorController {
             'Service unavailable',
             (error as Error).message
         );
-        return httpError;
+        return httpError.message;
     }
     register(error: Error) {
         const httpError = new HTTPError(
@@ -33,7 +33,7 @@ export class UserErrorController {
             'Service unavailable',
             (error as Error).message
         );
-        return httpError;
+        return httpError.message;
     }
 }
 
@@ -61,5 +61,18 @@ export class ErrorResourcesController {
             error.message
         );
         return httpError.message;
+    }
+}
+
+export class ErrorMiddlewares {
+    logged(error: Error) {
+        if (error.message === 'Some of your credentials are not correct.') {
+            const loggedError = new HTTPError(
+                403,
+                'Forbidden',
+                'Some of your credentials are not correct.'
+            );
+            return loggedError.message;
+        }
     }
 }

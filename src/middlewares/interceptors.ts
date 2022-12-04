@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { JwtPayload } from 'jsonwebtoken';
+import { ErrorMiddlewares } from '../Error/error.management.js';
 import { HTTPError } from '../Error/interfaces/error.js';
 import { ResourcesRepository } from '../repository/resources.repo.js';
 import { Auth } from '../services/auth/auth.js';
@@ -13,30 +14,18 @@ export const logged = (
     res: Response,
     next: NextFunction
 ) => {
+    const auth = new Auth();
+    const errors = new ErrorMiddlewares();
+
     const authString = req.get('Authorization');
-    if (!authString || !authString?.startsWith('Bearer')) {
-        next(
-            new HTTPError(
-                403,
-                'Forbidden',
-                'Some of your credentials are not correct.'
-            )
-        );
-        return;
-    }
+    if (!authString || !authString?.startsWith('Bearer'))
+        throw new Error('Some of your credentials are not correct.');
     try {
         const token = authString.slice(7);
-        const auth = new Auth();
         req.payload = auth.readToken(token);
         next();
     } catch (error) {
-        next(
-            new HTTPError(
-                403,
-                'Forbidden',
-                'Some of your credentials are not correct.'
-            )
-        );
+        next(errors.logged(error as Error));
     }
 };
 

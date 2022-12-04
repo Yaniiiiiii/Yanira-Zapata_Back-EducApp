@@ -6,7 +6,7 @@ import {
 } from '../Error/error.management';
 import { errorManager } from './error';
 
-describe('Given the errorManager function', () => {
+describe('Given the errorManager ', () => {
     UserErrorController.prototype.login = jest
         .fn()
         .mockResolvedValue(HTTPError);
@@ -20,9 +20,9 @@ describe('Given the errorManager function', () => {
         .fn()
         .mockResolvedValue(HTTPError);
 
-    describe('When its invoked', () => {
+    describe('When it is invoked', () => {
         const req = {};
-        const res = {
+        const resp = {
             status: jest.fn().mockReturnValue({}),
             json: jest.fn().mockReturnValue({}),
             end: jest.fn().mockReturnValue({}),
@@ -31,7 +31,7 @@ describe('Given the errorManager function', () => {
         const mockError = {
             name: 'Error',
             statusCode: 500,
-            statusMessage: 'Internal Server Error',
+            statusMessage: 'Server Error',
             message: 'Error',
         };
 
@@ -39,21 +39,21 @@ describe('Given the errorManager function', () => {
             errorManager(
                 mockError,
                 req as Request,
-                res as unknown as Response,
+                resp as unknown as Response,
                 next as NextFunction
             );
-            expect(res.status).toBeCalled();
+            expect(resp.status).toBeCalled();
         });
 
-        test('If error.name is ValidationError, then it should call the next function with a 406 status', () => {
+        test('If it is a ValidationError, then it should call the next function with a 406 status', () => {
             mockError.name = 'ValidationError';
             errorManager(
                 mockError,
                 req as Request,
-                res as unknown as Response,
+                resp as unknown as Response,
                 next as NextFunction
             );
-            expect(res.status).toBeCalled();
+            expect(resp.status).toBeCalled();
         });
 
         test('If there is no error.statuscode then it should return a status 500', () => {
@@ -66,10 +66,10 @@ describe('Given the errorManager function', () => {
             errorManager(
                 mockBadError as CustomError,
                 req as Request,
-                res as unknown as Response,
+                resp as unknown as Response,
                 next as NextFunction
             );
-            expect(res.status).toBeCalled();
+            expect(resp.status).toBeCalled();
         });
     });
 });
