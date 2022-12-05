@@ -36,7 +36,7 @@ export const verifyUser = async (
     const errors = new ErrorMiddlewares();
     const repo = ResourcesRepository.getInstance();
     try {
-        const resource = await repo.get(req.params.id);
+        const resource = await repo.get(req.body.id);
         if (req.payload && resource.owner._id.toString() !== req.payload.id) {
             next();
         }

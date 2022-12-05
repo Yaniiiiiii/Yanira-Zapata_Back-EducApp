@@ -29,10 +29,12 @@ export class UserController {
         try {
             const user = await this.repository.query('email', req.body.email);
             if (user.length === 0) throw new Error('Sorry, User not found.');
+
             const checkUser = await this.password.validate(
                 req.body.password,
                 user[0].password
             );
+
             if (!checkUser) throw new Error('Sorry, password not valid.');
             const token = await this.token.createToken({
                 id: user[0].id.toString(),
@@ -57,29 +59,28 @@ export class UserController {
 
     async addFavorites(req: ExtraRequest, resp: Response, next: NextFunction) {
         try {
-            const addFav = await this.resourceRepo.get(req.params.id);
-
             if (req.payload === undefined) {
                 throw new Error('Invalid payload');
             }
+            const addFav = await this.resourceRepo.get(req.body.id);
+
             const user = await this.repository.getOne(req.payload.id);
 
             if (user.favorites.includes(addFav.id)) {
                 throw new Error('The resource already exist');
             }
 
-            if (user.favorites.includes(addFav.id) === false) {
-                user.favorites.push(addFav.id);
+            user.favorites.push(addFav.id);
 
-                const updateUser = await this.repository.updateUser(
-                    user.id.toString(),
-                    {
-                        favorites: user.favorites,
-                    }
-                );
-                resp.status(200);
-                resp.json(updateUser);
-            }
+            const updateUser = await this.repository.updateUser(
+                user.id.toString(),
+                {
+                    favorites: user.favorites,
+                }
+            );
+
+            resp.status(200);
+            resp.json(updateUser);
         } catch (error) {
             next(this.error.register(error as Error));
         }
@@ -94,7 +95,7 @@ export class UserController {
             if (!req.payload) throw new Error('Not found payload');
             const user = await this.repository.getOne(req.payload.id);
 
-            const deleteFav = await this.resourceRepo.get(req.params.id);
+            const deleteFav = await this.resourceRepo.get(req.body.id);
 
             const updateWithoutResource = user.favorites.filter(
                 (song) => song.toString() !== deleteFav.id.toString()
@@ -109,6 +110,7 @@ export class UserController {
 
             resp.json({ updateUser });
         } catch (error) {
+            console.log(error);
             next(this.error.register(error as Error));
         }
     }

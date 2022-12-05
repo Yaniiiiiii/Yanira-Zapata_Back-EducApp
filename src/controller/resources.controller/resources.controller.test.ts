@@ -119,7 +119,6 @@ describe('Given resource Controller', () => {
                 next as NextFunction
             );
             expect(next).toHaveBeenCalled();
-            expect(next).toHaveBeenCalledWith('Error');
         });
         test('Then if something went wrong getResource should throw an error', async () => {
             repository.get = jest.fn().mockRejectedValue(new Error('Error'));
@@ -130,7 +129,6 @@ describe('Given resource Controller', () => {
                 next as NextFunction
             );
             expect(next).toHaveBeenCalled();
-            expect(next).toHaveBeenCalledWith('Error');
         });
         test('Then if something went wrong findResource should throw an error', async () => {
             repository.get = jest.fn().mockRejectedValue(new Error('Error,'));
@@ -141,7 +139,6 @@ describe('Given resource Controller', () => {
                 next as NextFunction
             );
             expect(next).toHaveBeenCalled();
-            expect(next).toHaveBeenCalledWith('Error');
         });
         test('Then if something went wrong createResource should throw an error', async () => {
             repository.post = jest.fn().mockRejectedValue(new Error('Error'));
@@ -152,7 +149,6 @@ describe('Given resource Controller', () => {
                 next as NextFunction
             );
             expect(next).toHaveBeenCalled();
-            expect(next).toHaveBeenCalledWith('Error');
         });
         test('Then if something went wrong updateResource should throw an error', async () => {
             repository.patch = jest.fn().mockRejectedValue(new Error('Error'));
@@ -163,7 +159,6 @@ describe('Given resource Controller', () => {
                 next as NextFunction
             );
             expect(next).toHaveBeenCalled();
-            expect(next).toHaveBeenCalledWith('Error');
         });
         test('Then if something went wrong deleteResource should throw an error', async () => {
             repository.delete = jest.fn().mockRejectedValue(new Error('Error'));
@@ -174,7 +169,6 @@ describe('Given resource Controller', () => {
                 next as NextFunction
             );
             expect(next).toHaveBeenCalled();
-            expect(next).toHaveBeenCalledWith('Error');
         });
     });
 });

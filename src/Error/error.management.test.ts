@@ -15,7 +15,7 @@ describe('Given ErrorUserController', () => {
                 'Incorrect PWD'
             );
             const result = errors.login(mockError);
-            expect(result).toBe('Incorrect PWD');
+            expect(result).toBeInstanceOf(HTTPError);
         });
         test('then the login should return a error message', () => {
             const mockError = new HTTPError(
@@ -24,7 +24,7 @@ describe('Given ErrorUserController', () => {
                 'Sorry, user not found.'
             );
             const result = errors.login(mockError);
-            expect(result).toBe('Sorry, user not found.');
+            expect(result).toBeInstanceOf(HTTPError);
         });
         test('then the login should return a error message', () => {
             const mockError = new HTTPError(
@@ -33,7 +33,7 @@ describe('Given ErrorUserController', () => {
                 'Sorry, password not valid.'
             );
             const result = errors.login(mockError);
-            expect(result).toBe('Sorry, password not valid.');
+            expect(result).toBeInstanceOf(HTTPError);
         });
         test('then the register should return a error message', () => {
             const mockError = new HTTPError(
@@ -42,12 +42,12 @@ describe('Given ErrorUserController', () => {
                 'Resource not found'
             );
             const result = errors.register(mockError);
-            expect(result).toBe('Resource not found');
+            expect(result).toBeInstanceOf(HTTPError);
         });
         test('then the register should return a error message', () => {
             const mockError = new HTTPError(1000, 'Incorrect Password', '');
             const result = errors.register(mockError);
-            expect(result).toBe('');
+            expect(result).toBeInstanceOf(HTTPError);
         });
     });
 
@@ -69,7 +69,7 @@ describe('Given ErrorUserController', () => {
                 'Incorrect Password'
             );
             const result = errors.createResource(mockError);
-            expect(result).toBe('Incorrect Password');
+            expect(result).toBeInstanceOf(HTTPError);
         });
         test('then the errorControl should return a error message', () => {
             const mockError = new HTTPError(
@@ -78,7 +78,7 @@ describe('Given ErrorUserController', () => {
                 'User not found'
             );
             const result = errors.errorControl(mockError);
-            expect(result).toBe('User not found');
+            expect(result).toBeInstanceOf(HTTPError);
         });
     });
 
@@ -91,7 +91,7 @@ describe('Given ErrorUserController', () => {
                 'Some of your credentials are not correct.'
             );
             const result = errors.logged(mockError);
-            expect(result).toBe('Some of your credentials are not correct.');
+            expect(result).toBeInstanceOf(HTTPError);
         });
         test('then the verifyUser should return a error message', () => {
             const mockError = new HTTPError(
@@ -100,7 +100,7 @@ describe('Given ErrorUserController', () => {
                 'Some of your credentials are not correct.'
             );
             const result = errors.verifyUser(mockError);
-            expect(result).toBe('Some of your credentials are not correct.');
+            expect(result).toBeInstanceOf(HTTPError);
         });
     });
 });
