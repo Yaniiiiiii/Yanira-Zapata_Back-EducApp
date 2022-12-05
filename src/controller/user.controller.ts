@@ -110,7 +110,6 @@ export class UserController {
 
             resp.json({ updateUser });
         } catch (error) {
-            console.log(error);
             next(this.error.register(error as Error));
         }
     }
