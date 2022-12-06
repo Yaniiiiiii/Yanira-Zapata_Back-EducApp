@@ -95,5 +95,15 @@ describe('Given the logged interceptor', () => {
             verifyUser(req as ExtraRequest, res as Response, next);
             expect(error).toBeInstanceOf(Error);
         });
+        test('Then it should throw an error if the req.payload is not valid', () => {
+            const req: Partial<ExtraRequest> = {
+                get: jest.fn().mockResolvedValue(false),
+            };
+            const res: Partial<Response> = {};
+            const next: NextFunction = jest.fn();
+
+            verifyUser(req as ExtraRequest, res as Response, next);
+            expect(next).toBeCalled();
+        });
     });
 });

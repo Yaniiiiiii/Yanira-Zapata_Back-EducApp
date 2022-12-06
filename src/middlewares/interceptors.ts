@@ -52,7 +52,6 @@ export const verifyUser = async (
                 )
             );
         }
-        next();
     } catch (error) {
         next(error);
     }
