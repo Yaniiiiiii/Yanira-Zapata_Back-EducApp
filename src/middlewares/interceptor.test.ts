@@ -1,6 +1,5 @@
 import { NextFunction, Response } from 'express';
 import { ErrorMiddlewares } from '../Error/error.management';
-import { ResourcesRepository } from '../repository/resources.repo';
 import { UsersRepository } from '../repository/users.repo';
 import { Auth } from '../services/auth/auth';
 import { ExtraRequest, logged, verifyUser } from './interceptors';
@@ -89,9 +88,7 @@ describe('Given the logged interceptor', () => {
         });
 
         test('Then it should throw an error', () => {
-            const req: Partial<ExtraRequest> = {
-                payload: undefined,
-            };
+            const req: Partial<ExtraRequest> = {};
             const res: Partial<Response> = {};
             const next: NextFunction = jest.fn();
             const error = new Error('Wrong email or password');
