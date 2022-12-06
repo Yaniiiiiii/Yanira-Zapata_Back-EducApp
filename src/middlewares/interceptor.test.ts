@@ -1,7 +1,7 @@
 import { NextFunction, Response } from 'express';
-import { Error } from 'mongoose';
 import { ErrorMiddlewares } from '../Error/error.management';
-import { HTTPError } from '../Error/interfaces/error';
+import { ResourcesRepository } from '../repository/resources.repo';
+import { UsersRepository } from '../repository/users.repo';
 import { Auth } from '../services/auth/auth';
 import { ExtraRequest, logged, verifyUser } from './interceptors';
 
@@ -26,6 +26,16 @@ describe('Given the logged interceptor', () => {
 
             expect(next).toHaveBeenCalled();
         });
+        test('and authString is empty, it should throw an error', () => {
+            Auth.prototype.readToken = jest.fn().mockReturnValueOnce(false);
+            const req: Partial<ExtraRequest> = {};
+            req.get = jest.fn();
+            const res: Partial<Response> = {};
+            const next: NextFunction = jest.fn();
+
+            logged(req as ExtraRequest, res as Response, next);
+            expect(next).toHaveBeenCalled();
+        });
     });
 
     describe('Given the verifyUser interceptor', () => {
@@ -40,6 +50,53 @@ describe('Given the logged interceptor', () => {
                 verifyUser(req as ExtraRequest, res as Response, next);
                 expect(next).toBeCalled();
             });
+        });
+        test('if the req.payload is not correct, then it should throw an error', async () => {
+            const req: Partial<ExtraRequest> = {
+                payload: {
+                    id: '1',
+                    name: 'Yani',
+                },
+            };
+
+            const res: Partial<Response> = {};
+            const next: NextFunction = jest.fn();
+
+            await verifyUser(req as ExtraRequest, res as Response, next);
+            expect(next).toHaveBeenCalled();
+        });
+
+        test('if the req.payload is not correct, then it should call next and throw an error', async () => {
+            const req: Partial<ExtraRequest> = {
+                payload: {
+                    payload: {
+                        id: '1',
+                        name: 'Yani',
+                    },
+                },
+            };
+
+            UsersRepository.getInstance = jest
+                .fn()
+                .mockResolvedValue({ id: '638785e04ddf730eef9fcf6d' });
+
+            const res: Partial<Response> = {};
+            const next: NextFunction = jest.fn();
+
+            await verifyUser(req as ExtraRequest, res as Response, next);
+
+            expect(next).toHaveBeenCalled();
+        });
+
+        test('Then it should throw an error', () => {
+            const req: Partial<ExtraRequest> = {
+                payload: undefined,
+            };
+            const res: Partial<Response> = {};
+            const next: NextFunction = jest.fn();
+            const error = new Error('Wrong email or password');
+            verifyUser(req as ExtraRequest, res as Response, next);
+            expect(error).toBeInstanceOf(Error);
         });
     });
 });

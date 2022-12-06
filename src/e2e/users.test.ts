@@ -69,7 +69,7 @@ describe('Given the "app" with the "/users" route', () => {
         });
     });
 
-    describe('When we the login method from the "UserController"', () => {
+    describe('When the login method from the "UserController"', () => {
         const mockUser = {
             name: 'Celia',
             email: 'celia@gmail.com',
@@ -101,9 +101,63 @@ describe('Given the "app" with the "/users" route', () => {
         });
     });
 
-    afterAll(async () => {
-        await mongoose.disconnect();
+    describe('When the addFavorites method is run', () => {
+        const mockResource = [
+            {
+                id: 'reading',
+                title: 'puzzle',
+                subject: 'reading',
+                grade: 'first',
+            },
+        ];
+        const mockUser = {
+            name: 'Celia',
+            email: 'celia@gmail.com',
+            password: 'celia1',
+            favorites: [mockResource],
+        };
+
+        test('Then if the resource is not found, it should return a status 404', async () => {
+            await request(app)
+                .post('/users/addFavorites/id')
+                .set('Authorization', `Bearer ${userToken}`)
+                .send({})
+                .expect(404);
+        });
+        // test('Then if the resource is not found, it should return a status 404', async () => {
+        //     await request(app)
+        //         .post('/users/addFavorites/id')
+        //         .set('Authorization', `Bearer ${userToken}`)
+        //         .send(mockResource[0].id)
+        //         .expect(200);
+        // });
+    });
+    describe('When the deleteFavorites method is run', () => {
+        const mockResource = [
+            {
+                id: 'reading',
+                title: 'puzzle',
+                subject: 'reading',
+                grade: 'first',
+            },
+        ];
+        const mockUser = {
+            name: 'Celia',
+            email: 'celia@gmail.com',
+            password: 'celia1',
+            favorites: [mockResource],
+        };
+
+        test('Then if the resource is not found, it should return a status 404', async () => {
+            await request(app)
+                .post('/users/deleteFavorites/id')
+                .set('Authorization', `Bearer ${userToken}`)
+                .send({})
+                .expect(404);
+        });
+
+        afterAll(async () => {
+            await mongoose.disconnect();
+        });
     });
 });
-
-//.set('Authorization', `Bearer ${userToken}`)

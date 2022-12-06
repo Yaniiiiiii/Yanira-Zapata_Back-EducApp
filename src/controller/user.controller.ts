@@ -62,9 +62,8 @@ export class UserController {
             if (req.payload === undefined) {
                 throw new Error('Invalid payload');
             }
-            const addFav = await this.resourceRepo.get(req.body.id);
-
             const user = await this.repository.getOne(req.payload.id);
+            const addFav = await this.resourceRepo.get(req.body.id);
 
             if (user.favorites.includes(addFav.id)) {
                 throw new Error('The resource already exist');
@@ -98,7 +97,7 @@ export class UserController {
             const deleteFav = await this.resourceRepo.get(req.body.id);
 
             const updateWithoutResource = user.favorites.filter(
-                (song) => song.toString() !== deleteFav.id.toString()
+                (resource) => resource.toString() !== deleteFav.id.toString()
             );
 
             const updateUser = await this.repository.updateUser(

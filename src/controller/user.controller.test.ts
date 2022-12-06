@@ -5,8 +5,6 @@ import { NextFunction, Request, Response } from 'express';
 import { ExtraRequest } from '../middlewares/interceptors';
 import { Password } from '../services/auth/password';
 import { Auth } from '../services/auth/auth';
-import { HTTPError } from '../Error/interfaces/error';
-import { Http2ServerRequest } from 'http2';
 
 jest.mock('../services/auth/password');
 jest.mock('../services/auth/auth');
@@ -58,7 +56,7 @@ describe('Given the UserController', () => {
 
     const userController = new UserController(repository, resourceRepo);
 
-    const req: Partial<ExtraRequest> = {
+    let req: Partial<ExtraRequest> = {
         body: { email: '', password: '' },
         payload: {
             id: '1',
@@ -163,7 +161,7 @@ describe('Given the UserController', () => {
             );
             expect(resp.json).toBeCalledWith(mockUsers[0].id);
         });
-        // test©('Then if there is a http error it should throw an error', async () => {
+        // test('Then if there is a http error it should throw an error', async () => {
         //     repository.deleteUser = jest.fn().mockResolvedValueOnce(HTTPError);
         //     await userController.deleteUser(
         //         req as ExtraRequest,
@@ -190,6 +188,32 @@ describe('Given the UserController', () => {
                 grade: 'first',
             },
         ];
+        const mockUsersfav = {
+            id: '1',
+            name: 'Ana',
+            email: 'ana@gmail.com',
+            favorites: [mockResource[0]],
+        };
+        test('Then it should return ', async () => {
+            resourceRepo.get = jest.fn().mockResolvedValue(mockResource[0]);
+            repository.getOne = jest.fn().mockResolvedValue(mockUsersfav);
+            await userController.addFavorites(
+                req as ExtraRequest,
+                resp as Response,
+                next as NextFunction
+            );
+            expect(next).toHaveBeenCalled();
+        });
+        test('Then if the resource already exits it it should return an error', async () => {
+            resourceRepo.get = jest.fn().mockResolvedValue({ id: '2' });
+            repository.getOne = jest.fn().mockResolvedValue(mockUsersfav);
+            await userController.addFavorites(
+                req as ExtraRequest,
+                resp as Response,
+                next as NextFunction
+            );
+            expect(next).toHaveBeenCalled();
+        });
         test('Then it should return ', async () => {
             resourceRepo.get = jest.fn().mockResolvedValue(mockResource[0]);
             repository.getOne = jest.fn().mockResolvedValue(mockUsers[0]);
@@ -301,6 +325,45 @@ describe('Given the UserController', () => {
                 next
             );
             expect(next).toBeCalled();
+        });
+    });
+    describe('Test withoutpayload', () => {
+        test('Then it should return error invalid payload', async () => {
+            req = {};
+            resourceRepo.get = jest.fn().mockResolvedValueOnce(mockResource[1]);
+            repository.getOne = jest.fn().mockResolvedValueOnce(mockUsers[0]);
+            repository.updateUser = jest.fn().mockResolvedValueOnce({
+                id: mockUsers[0].id,
+                name: mockUsers[0].name,
+                email: mockUsers[0].email,
+                favorites: [mockResource[0]],
+            });
+            await userController.addFavorites(
+                req as ExtraRequest,
+                resp as Response,
+                next
+            );
+            expect(next).toHaveBeenCalled();
+        });
+
+        test('This should return the user updated...', async () => {
+            repository.getOne = jest.fn().mockResolvedValueOnce([]);
+            resourceRepo.get = jest.fn().mockResolvedValueOnce([]);
+            await userController.deleteFavorites(
+                req as ExtraRequest,
+                resp as Response,
+                next
+            );
+            expect(next).toHaveBeenCalled();
+        });
+        test('this should return the user', async () => {
+            repository.deleteUser = jest.fn().mockReturnValueOnce(undefined);
+            await userController.deleteUser(
+                req as ExtraRequest,
+                resp as Response,
+                next
+            );
+            expect(next).toHaveBeenCalled();
         });
     });
 });
