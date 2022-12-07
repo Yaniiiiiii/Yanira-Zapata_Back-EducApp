@@ -99,7 +99,7 @@ describe('Given the UserController', () => {
     });
 
     describe('When the login is run and the password is correct', () => {
-        test('Then it should return a token', async () => {
+        test('Then it should return a token and the user', async () => {
             (repository.query as jest.Mock).mockReturnValue(mockUsers);
 
             await userController.login(
@@ -107,8 +107,10 @@ describe('Given the UserController', () => {
                 resp as Response,
                 next as NextFunction
             );
-            expect(next).toHaveBeenCalled();
-            expect(resp.json).toHaveBeenCalledWith({ token: mockToken });
+            expect(resp.json).toHaveBeenCalledWith({
+                token: mockToken,
+                user: mockUsers,
+            });
         });
         test('Then if user does NOT exit, it should return an error', async () => {
             (repository.getOne as jest.Mock).mockRejectedValue(
@@ -147,7 +149,10 @@ describe('Given the UserController', () => {
                 next as NextFunction
             );
 
-            expect(resp.json).toHaveBeenCalledWith({ token: mockToken });
+            expect(resp.json).toHaveBeenCalledWith({
+                token: mockToken,
+                user: mockUsers,
+            });
         });
 
         test('Then if the payload is not correct it should return an error', async () => {

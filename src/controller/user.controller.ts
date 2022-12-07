@@ -41,7 +41,7 @@ export class UserController {
                 name: user[0].name,
             });
             resp.status(200);
-            resp.json({ token });
+            resp.json({ token: token, user: user });
         } catch (error) {
             next(this.error.login(error as Error));
         }
