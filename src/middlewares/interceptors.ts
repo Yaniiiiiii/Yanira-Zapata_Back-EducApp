@@ -1,7 +1,9 @@
+import { error } from 'console';
 import { Request, Response, NextFunction } from 'express';
 import { JwtPayload } from 'jsonwebtoken';
 import { ErrorMiddlewares } from '../Error/error.management.js';
-import { ResourcesRepository } from '../repository/resources.repo.js';
+
+import { UsersRepository } from '../repository/users.repo.js';
 import { Auth } from '../services/auth/auth.js';
 
 export interface ExtraRequest extends Request {
@@ -17,10 +19,15 @@ export const logged = (
     const errors = new ErrorMiddlewares();
 
     const authString = req.get('Authorization');
-    if (!authString || !authString?.startsWith('Bearer'))
-        throw new Error('Some of your credentials are not correct.');
+    if (!authString || !authString?.startsWith('Bearer')) {
+        next(
+            errors.logged(
+                new Error('Some of your credentials are not correct.')
+            )
+        );
+    }
     try {
-        const token = authString.slice(7);
+        const token = (authString as string).slice(7);
         req.payload = auth.readToken(token);
         next();
     } catch (error) {
@@ -30,17 +37,22 @@ export const logged = (
 
 export const verifyUser = async (
     req: ExtraRequest,
-    res: Response,
+    _res: Response,
     next: NextFunction
 ) => {
-    const errors = new ErrorMiddlewares();
-    const repo = ResourcesRepository.getInstance();
+    const userRepo = UsersRepository.getInstance();
     try {
-        const resource = await repo.get(req.params.id);
-        if (req.payload && resource.owner._id.toString() !== req.payload.id) {
-            next();
+        const errors = new ErrorMiddlewares();
+
+        const user = await userRepo.getOne((req.payload as JwtPayload).id);
+        if (!req.payload || user.id !== req.payload.id) {
+            next(
+                errors.logged(
+                    new Error('Some of your credentials are not correct.')
+                )
+            );
         }
     } catch (error) {
-        next(errors.logged(error as Error));
+        next(error);
     }
 };

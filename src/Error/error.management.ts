@@ -8,7 +8,7 @@ export class UserErrorController {
                 'Sorry, user not found.',
                 error.message
             );
-            return httpError.message;
+            return httpError;
         }
 
         if (error.message === 'Sorry, password not valid.') {
@@ -17,7 +17,7 @@ export class UserErrorController {
                 'Sorry, password not valid.',
                 error.message
             );
-            return httpError.message;
+            return httpError;
         }
 
         const httpError = new HTTPError(
@@ -25,7 +25,7 @@ export class UserErrorController {
             'Service unavailable',
             error.message
         );
-        return httpError.message;
+        return httpError;
     }
     register(error: Error) {
         const httpError = new HTTPError(
@@ -33,7 +33,7 @@ export class UserErrorController {
             'Service unavailable',
             error.message
         );
-        return httpError.message;
+        return httpError;
     }
 }
 
@@ -52,7 +52,7 @@ export class ErrorResourcesController {
             'Sorry, out of service.',
             error.message
         );
-        return httpError.message;
+        return httpError;
     }
     errorControl(error: Error) {
         const httpError = new HTTPError(
@@ -60,7 +60,7 @@ export class ErrorResourcesController {
             'Sorry, out of service.',
             error.message
         );
-        return httpError.message;
+        return httpError;
     }
 }
 
@@ -72,7 +72,7 @@ export class ErrorMiddlewares {
                 'Forbidden',
                 'Some of your credentials are not correct.'
             );
-            return loggedError.message;
+            return loggedError;
         }
     }
     verifyUser(error: Error) {
@@ -82,7 +82,7 @@ export class ErrorMiddlewares {
                 'Forbidden',
                 'Some of your credentials are not correct.'
             );
-            return loggedError.message;
+            return loggedError;
         }
     }
 }

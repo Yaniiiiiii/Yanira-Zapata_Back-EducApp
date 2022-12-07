@@ -42,7 +42,7 @@ describe('Given resource Controller', () => {
         repository,
         userRepository
     );
-    const req: Partial<ExtraRequest> = {
+    let req: Partial<ExtraRequest> = {
         params: { key: 'math', value: 'first' },
         body: { owner: 'owner' },
         payload: 'payload' as unknown as JwtPayload,
@@ -80,6 +80,15 @@ describe('Given resource Controller', () => {
                 next
             );
             expect(res.json).toHaveBeenCalledWith({ resource: mockData });
+        });
+        test('Then findResource should have been called', async () => {
+            repository.query = jest.fn().mockRejectedValue(new Error('error'));
+            await resourceController.findResource(
+                req as Request,
+                res as Response,
+                next
+            );
+            expect(next).toHaveBeenCalled();
         });
         test('Then createResource should have been called', async () => {
             await resourceController.createResource(
@@ -119,7 +128,6 @@ describe('Given resource Controller', () => {
                 next as NextFunction
             );
             expect(next).toHaveBeenCalled();
-            expect(next).toHaveBeenCalledWith('Error');
         });
         test('Then if something went wrong getResource should throw an error', async () => {
             repository.get = jest.fn().mockRejectedValue(new Error('Error'));
@@ -130,7 +138,6 @@ describe('Given resource Controller', () => {
                 next as NextFunction
             );
             expect(next).toHaveBeenCalled();
-            expect(next).toHaveBeenCalledWith('Error');
         });
         test('Then if something went wrong findResource should throw an error', async () => {
             repository.get = jest.fn().mockRejectedValue(new Error('Error,'));
@@ -141,7 +148,6 @@ describe('Given resource Controller', () => {
                 next as NextFunction
             );
             expect(next).toHaveBeenCalled();
-            expect(next).toHaveBeenCalledWith('Error');
         });
         test('Then if something went wrong createResource should throw an error', async () => {
             repository.post = jest.fn().mockRejectedValue(new Error('Error'));
@@ -152,7 +158,33 @@ describe('Given resource Controller', () => {
                 next as NextFunction
             );
             expect(next).toHaveBeenCalled();
-            expect(next).toHaveBeenCalledWith('Error');
+        });
+        test('Then createResource should have been called', async () => {
+            req.payload = { id: '2' };
+            const userwithResource = {
+                id: 1,
+                name: 'Sandra',
+                resources: [
+                    {
+                        id: '2',
+                        name: 'puzzle',
+                    },
+                ],
+            };
+            repository.post = jest.fn().mockResolvedValue({
+                id: '2',
+                name: 'puzzle',
+            });
+            userRepository.getOne = jest.fn().mockResolvedValue(mockData[0]);
+            userRepository.updateUser = jest
+                .fn()
+                .mockResolvedValue(userwithResource);
+            await resourceController.createResource(
+                req as Request,
+                res as Response,
+                next
+            );
+            expect(next).toHaveBeenCalled();
         });
         test('Then if something went wrong updateResource should throw an error', async () => {
             repository.patch = jest.fn().mockRejectedValue(new Error('Error'));
@@ -163,7 +195,6 @@ describe('Given resource Controller', () => {
                 next as NextFunction
             );
             expect(next).toHaveBeenCalled();
-            expect(next).toHaveBeenCalledWith('Error');
         });
         test('Then if something went wrong deleteResource should throw an error', async () => {
             repository.delete = jest.fn().mockRejectedValue(new Error('Error'));
@@ -174,7 +205,35 @@ describe('Given resource Controller', () => {
                 next as NextFunction
             );
             expect(next).toHaveBeenCalled();
-            expect(next).toHaveBeenCalledWith('Error');
+        });
+    });
+    describe('Whithout Payload', () => {
+        test('Then createREsource should have been called', async () => {
+            req = {};
+            const userwithResource = {
+                id: 1,
+                name: 'Sandra',
+                resources: [
+                    {
+                        id: '2',
+                        name: 'puzzle',
+                    },
+                ],
+            };
+            repository.post = jest.fn().mockResolvedValue({
+                id: '2',
+                name: 'puzzle',
+            });
+            userRepository.getOne = jest.fn().mockResolvedValue({});
+            userRepository.updateUser = jest
+                .fn()
+                .mockResolvedValueOnce(userwithResource);
+            await resourceController.createResource(
+                req as ExtraRequest,
+                res as Response,
+                next
+            );
+            expect(next).toHaveBeenCalled();
         });
     });
 });
