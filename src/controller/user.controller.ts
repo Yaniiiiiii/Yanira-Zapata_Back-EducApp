@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { Error } from 'mongoose';
+import { UserModel } from '../entities/users.js';
 import { UserErrorController } from '../Error/error.management.js';
 import { ExtraRequest } from '../middlewares/interceptors.js';
 import { ResourcesRepo, UserRepo } from '../repository/repo.interface.js';
@@ -41,7 +42,7 @@ export class UserController {
                 name: user[0].name,
             });
             resp.status(200);
-            resp.json({ token: token, user: user });
+            resp.json({ token: token, user: UserModel });
         } catch (error) {
             next(this.error.login(error as Error));
         }
