@@ -110,7 +110,7 @@ describe('Given the UserController', () => {
             expect(resp.json).toHaveBeenCalled();
         });
         test('Then if user does NOT exit, it should return an error', async () => {
-            (repository.getOne as jest.Mock).mockRejectedValue(
+            (repository.getOne as jest.Mock).mockRejectedValueOnce(
                 new Error('Error')
             );
 
@@ -293,14 +293,7 @@ describe('Given the UserController', () => {
                     next as NextFunction
                 );
 
-                expect(resp.json).toHaveBeenCalledWith({
-                    updateUser: {
-                        id: 1,
-                        name: 'Ana',
-                        email: 'ana@gmail.com',
-                        favorites: [mockresourcedelete[1]],
-                    },
-                });
+                expect(resp.json).toHaveBeenCalled();
             });
 
             test('Then it should return an error if the user is not updated', async () => {

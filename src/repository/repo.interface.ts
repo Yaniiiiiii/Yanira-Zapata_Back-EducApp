@@ -16,6 +16,6 @@ export interface UserRepo {
     getOne: (id: id) => Promise<UserI>;
     addUser: (data: Partial<UserI>) => Promise<UserI>;
     updateUser: (id: id, data: Partial<UserI>) => Promise<UserI>;
-    query: (key: string, value: string) => Promise<Array<UserI>>;
+    query: (key: string, value: string) => Promise<UserI>;
     deleteUser: (id: id) => Promise<id>;
 }

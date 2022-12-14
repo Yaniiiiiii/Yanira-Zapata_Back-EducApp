@@ -62,7 +62,7 @@ describe('Given a singleton instance of the class "UsersRepository"', () => {
     describe('When query is run"', () => {
         test('Then it returns the user', async () => {
             const result = await repository.query('name', 'Luis');
-            const test = result[0];
+            const test = result;
             expect(test.name).toEqual(mockData[0].name);
         });
     });
