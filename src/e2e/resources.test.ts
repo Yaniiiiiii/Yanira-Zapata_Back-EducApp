@@ -6,8 +6,6 @@ import { UserModel } from '../entities/users';
 import { Auth } from '../services/auth/auth';
 import { dbConnect } from '../services/dbconnect';
 
-/* istanbul ignore file */
-
 const mockData = [
     { name: 'Susi', email: 'susi@gmail.com', password: 'susi1' },
     { name: 'Sara', email: 'sara@gmail.com', password: 'sara1' },

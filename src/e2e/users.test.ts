@@ -5,6 +5,7 @@ import { app } from '../app';
 import mongoose from 'mongoose';
 import { Auth } from '../services/auth/auth';
 import { ResourceModel } from '../entities/resources';
+
 /* istanbul ignore file */
 
 const mockData = [
