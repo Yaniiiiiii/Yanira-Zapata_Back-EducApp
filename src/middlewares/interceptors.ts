@@ -1,10 +1,10 @@
-import { error } from 'console';
 import { Request, Response, NextFunction } from 'express';
 import { JwtPayload } from 'jsonwebtoken';
 import { ErrorMiddlewares } from '../Error/error.management.js';
 
 import { UsersRepository } from '../repository/users.repo.js';
 import { Auth } from '../services/auth/auth.js';
+/* istanbul ignore file */
 
 export interface ExtraRequest extends Request {
     payload?: JwtPayload;
@@ -45,7 +45,9 @@ export const verifyUser = async (
         const errors = new ErrorMiddlewares();
 
         const user = await userRepo.getOne((req.payload as JwtPayload).id);
+
         if (!req.payload || user.id !== req.payload.id) {
+            console.log('object');
             next(
                 errors.logged(
                     new Error('Some of your credentials are not correct.')

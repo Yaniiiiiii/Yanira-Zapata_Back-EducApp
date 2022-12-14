@@ -52,19 +52,22 @@ export const userSchema = new Schema<UserI>({
     grade: String,
     resources: [
         {
-            type: [Schema.Types.ObjectId],
+            type: Schema.Types.ObjectId,
             ref: 'resource',
         },
     ],
     favorites: [
         {
-            type: [Schema.Types.ObjectId],
+            type: Schema.Types.ObjectId,
+            name: String,
+            subject: String,
+            grade: String,
             ref: 'resource',
         },
     ],
     carts: [
         {
-            type: [Schema.Types.ObjectId],
+            type: Schema.Types.ObjectId,
             ref: 'resource',
         },
     ],

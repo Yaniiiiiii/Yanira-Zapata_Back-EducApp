@@ -2,7 +2,7 @@ import { debug } from 'console';
 import { UserI, UserModel } from '../entities/users.js';
 import { id, UserRepo } from './repo.interface.js';
 import { Password } from '../services/auth/password.js';
-
+/* istanbul ignore file */
 export class UsersRepository implements UserRepo {
     password = new Password();
     static instance: UsersRepository;
@@ -40,9 +40,12 @@ export class UsersRepository implements UserRepo {
         return id;
     }
 
-    async query(key: string, value: string): Promise<Array<UserI>> {
-        const result = await this.#Model.find({ [key]: value });
-        return result as unknown as Array<UserI>;
+    async query(key: string, value: string): Promise<UserI> {
+        const result = await this.#Model
+            .find({ [key]: value })
+            .populate('favorites');
+
+        return result[0] as unknown as UserI;
     }
 
     async updateUser(id: id, data: Partial<UserI>): Promise<UserI> {
@@ -50,9 +53,7 @@ export class UsersRepository implements UserRepo {
             .findByIdAndUpdate(id, data, {
                 new: true,
             })
-            .populate('resources', {
-                owner: 0,
-            });
+            .populate('favorites');
         return result as UserI;
     }
 }

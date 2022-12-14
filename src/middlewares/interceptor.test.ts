@@ -105,5 +105,24 @@ describe('Given the logged interceptor', () => {
             verifyUser(req as ExtraRequest, res as Response, next);
             expect(next).toBeCalled();
         });
+        // test('linea sin cubrir', () => {
+        //     const mockNewUser = {
+        //         name: 'Yanira',
+        //         id: '2',
+        //         email: 'yanira@gmail.com',
+        //         password: '45678',
+        //     };
+        //     const repo = UsersRepository.getInstance();
+        //     repo.getOne = jest.fn().mockResolvedValueOnce(mockNewUser);
+
+        //     const req: Partial<ExtraRequest> = {
+        //         payload: { id: '1' },
+        //     };
+        //     const res: Partial<Response> = {};
+        //     const next: NextFunction = jest.fn();
+
+        //     verifyUser(req as ExtraRequest, res as Response, next);
+        //     expect(next).rejects.toBeCalled();
+        // });
     });
 });

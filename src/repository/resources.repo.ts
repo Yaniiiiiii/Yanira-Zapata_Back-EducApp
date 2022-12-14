@@ -5,7 +5,7 @@ import {
     ResourceModel,
 } from '../entities/resources.js';
 import { id, ResourcesRepo } from './repo.interface.js';
-
+/* istanbul ignore file */
 export class ResourcesRepository implements ResourcesRepo {
     static instance: ResourcesRepository;
 

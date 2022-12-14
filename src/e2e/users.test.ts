@@ -6,6 +6,8 @@ import mongoose from 'mongoose';
 import { Auth } from '../services/auth/auth';
 import { ResourceModel } from '../entities/resources';
 
+/* istanbul ignore file */
+
 const mockData = [
     { name: 'Susi', email: 'susi@gmail.com', password: 'susi1' },
     { name: 'Sara', email: 'sara@gmail.com', password: 'sara1' },

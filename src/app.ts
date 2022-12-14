@@ -9,7 +9,7 @@ export const app = express();
 app.disable('x-powered-by');
 
 const corsOptions = {
-    origin: 'trustedwebsite.com',
+    origin: '*',
 };
 app.use(morgan('dev'));
 app.use(cors(corsOptions));

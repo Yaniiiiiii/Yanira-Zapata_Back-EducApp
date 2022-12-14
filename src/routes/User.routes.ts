@@ -23,3 +23,9 @@ userRouter.patch(
     logged,
     controller.deleteFavorites.bind(controller)
 );
+
+userRouter.delete(
+    '/deleteUser',
+    logged,
+    controller.deleteUser.bind(controller)
+);
