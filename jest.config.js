@@ -4,5 +4,13 @@ export default {
     testEnvironment: 'node',
     testPathIgnorePatterns: ['dist'],
     resolver: 'jest-ts-webcompat-resolver',
-    coveragePathIgnorePatterns: ['src/entities', 'src/app.ts', 'src/index.ts'],
+    coveragePathIgnorePatterns: [
+        'src/entities',
+        'src/app.ts',
+        'src/index.ts',
+        'src/e2e',
+        'src/middlewares/interceptors.ts',
+        'src/repository/users.repo.ts',
+        'src/controller/user.controller',
+    ],
 };

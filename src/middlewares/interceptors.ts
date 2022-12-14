@@ -45,7 +45,6 @@ export const verifyUser = async (
         const errors = new ErrorMiddlewares();
 
         const user = await userRepo.getOne((req.payload as JwtPayload).id);
-        console.log(req.payload, 'PAYLOAD');
 
         if (!req.payload || user.id !== req.payload.id) {
             console.log('object');
