@@ -11,6 +11,6 @@ export default {
         'src/e2e',
         'src/middlewares/interceptors.ts',
         'src/repository/users.repo.ts',
-        'src/controller/user.controller',
+        'src/controller/user.controller.ts',
     ],
 };
