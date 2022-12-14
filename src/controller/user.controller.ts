@@ -27,26 +27,23 @@ export class UserController {
 
     async login(req: Request, resp: Response, next: NextFunction) {
         try {
-            console.log(1);
             const user = await this.repository.query('email', req.body.email);
             // if (Object.keys(user).length === 0)
             //     throw new Error('Sorry, User not found.');
-            // console.log(user, '2');
+
             const checkUser = await this.password.validate(
                 req.body.password,
                 user.password
             );
-            console.log(3);
 
             if (!checkUser) throw new Error('Sorry, password not valid.');
             const token = await this.token.createToken({
                 id: user.id.toString(),
                 name: user.name,
             });
-            console.log(4);
+
             resp.status(200);
             resp.json({ token: token, user: user });
-            console.log(5);
         } catch (error) {
             next(this.error.login(error as Error));
         }

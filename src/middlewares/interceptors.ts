@@ -47,7 +47,6 @@ export const verifyUser = async (
         const user = await userRepo.getOne((req.payload as JwtPayload).id);
 
         if (!req.payload || user.id !== req.payload.id) {
-            console.log('object');
             next(
                 errors.logged(
                     new Error('Some of your credentials are not correct.')
