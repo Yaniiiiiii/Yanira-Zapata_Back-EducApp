@@ -43,10 +43,10 @@ export class UserController {
                 id: user.id.toString(),
                 name: user.name,
             });
-            // console.log(4);
-            // resp.status(200);
-            // resp.json({ token: token, user: user });
-            // console.log(5);
+            console.log(4);
+            resp.status(200);
+            resp.json({ token: token, user: user });
+            console.log(5);
         } catch (error) {
             next(this.error.login(error as Error));
         }
@@ -70,21 +70,21 @@ export class UserController {
             const user = await this.repository.getOne(req.payload.id);
             const addFav = await this.resourceRepo.get(req.params.id);
 
-            // if (user.favorites.includes(addFav.id)) {
-            //     throw new Error('The resource already exist');
-            // }
+            if (user.favorites.includes(addFav.id)) {
+                throw new Error('The resource already exist');
+            }
 
-            // user.favorites.push(addFav.id);
+            user.favorites.push(addFav.id);
 
-            // const userUpdate = await this.repository.updateUser(
-            //     user.id.toString(),
-            //     {
-            //         favorites: user.favorites,
-            //     }
-            // );
+            const userUpdate = await this.repository.updateUser(
+                user.id.toString(),
+                {
+                    favorites: user.favorites,
+                }
+            );
 
-            // resp.status(200);
-            // resp.json(userUpdate);
+            resp.status(200);
+            resp.json(userUpdate);
         } catch (error) {
             next(this.error.register(error as Error));
         }
@@ -101,16 +101,16 @@ export class UserController {
 
             const deleteFav = await this.resourceRepo.get(req.params.id);
 
-            // const updateWithoutResource = user.favorites.filter(
-            //     (resource) => resource.toString() !== deleteFav.id.toString()
-            // );
+            const updateWithoutResource = user.favorites.filter(
+                (resource) => resource.toString() !== deleteFav.id.toString()
+            );
 
-            // const updateUser = await this.repository.updateUser(
-            //     user.id.toString(),
-            //     {
-            //         favorites: updateWithoutResource,
-            //     }
-            // );
+            const updateUser = await this.repository.updateUser(
+                user.id.toString(),
+                {
+                    favorites: updateWithoutResource,
+                }
+            );
 
             resp.json(updateUser);
         } catch (error) {
