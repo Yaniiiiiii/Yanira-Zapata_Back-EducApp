@@ -15,7 +15,7 @@
 
 El proyecto es una "single page application" de tipo "mobile only" en la que los usuarios podrán añadir, modificar y eliminar recursos o ideas referentes al ámbito educativo. Estos recursos podrán ser almacenados por otros usuarios en listas de favoritos, siempre y cuando, se hayan registrado(register) e
 iniciado sesión(log in) previamente. 
-# Posible extensión
+## Posible extensión
 Los usuarios que así lo deseen, podrán poner a la venta sus propios recursos educativos y comprar los de otros usuarios.
 
 ## Funciones básicas y endpoints.
